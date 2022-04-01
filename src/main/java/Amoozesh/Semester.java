@@ -8,11 +8,11 @@ public class Semester
     private int semesterID;
     private ArrayList<Course> courses;
 
-    public int getSemesterNumber() {
+    public int getSemesterID() {
         return semesterID;
     }
 
-    public void setSemesterNumber(int semesterNumber) {
+    public void setSemesterID(int semesterNumber) {
         this.semesterID = semesterNumber;
     }
 

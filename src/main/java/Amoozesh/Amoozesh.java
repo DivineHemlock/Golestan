@@ -6,15 +6,15 @@ public class Amoozesh
 {
     private String name;
     private static ArrayList<Semester> semesters;
-    public static boolean isAmoozeshMade;
+    private static ArrayList<Faculty> faculties;
+    public static boolean isAmoozeshMade = false;
 
-    public ArrayList<Semester> getSemesters() {
-        return semesters;
+    public static ArrayList<Faculty> getFaculties() {
+        return faculties;
     }
 
-    // adds semester to amoozesh list of semesters
-    private void addSemesters(Semester semester) {
-        semesters.add(semester);
+    public static ArrayList<Semester> getSemesters() {
+        return semesters;
     }
 
     public String getName() {
@@ -27,12 +27,18 @@ public class Amoozesh
 
     public void makeSemester(String name , int ID)
     {
-        new Semester(name , new ArrayList<>(), ID);
+        semesters.add(new Semester(name , new ArrayList<>(), ID));
+    }
+
+    public void makeFaculty(String name , int ID)
+    {
+        faculties.add(new Faculty(name , ID));
     }
 
     public Amoozesh(String name) {
         this.name = name;
         semesters = new ArrayList<>();
+        faculties = new ArrayList<>();
         isAmoozeshMade = true;
     }
 }
