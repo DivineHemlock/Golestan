@@ -28,6 +28,20 @@ public class Semester
         return courses;
     }
 
+    public void printCoursesInSemester (int semesterID)
+    {
+        for (Semester smst : Amoozesh.semesters)
+        {
+            if (smst.semesterID == semesterID)
+            {
+                for (int i = 0 ; i < smst.courses.size() ; i++)
+                {
+                    System.out.println(smst.courses.get(i).getName() + "  " + smst.courses.get(i).getFaculty().getName() + "  " + smst.courses.get(i).getProfessorName());
+                }
+            }
+        }
+    }
+
     public void addCourse(Course course) {
         this.courses.add(course);
     }
@@ -41,6 +55,20 @@ public class Semester
             }
         }
     }
+
+    public static Semester getSemester(int ID)
+    {
+        for (Semester smst : Amoozesh.semesters)
+        {
+            if (smst.getSemesterID() == ID)
+            {
+                return smst;
+            }
+        }
+        return null;
+    }
+
+
 
     public Semester(String name, int semesterID) {
         this.name = name;

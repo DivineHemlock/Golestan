@@ -1,5 +1,7 @@
 package Amoozesh;
 
+import java.util.Objects;
+
 public class Course
 {
     private String name;
@@ -68,6 +70,24 @@ public class Course
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public static Course getCourse(int semesterID , int courseID)
+    {
+        for (Semester smst : Amoozesh.semesters)
+        {
+            if (smst.getSemesterID() == semesterID)
+            {
+                for (Course crs : Objects.requireNonNull(Semester.getSemester(semesterID)).getCourses())
+                {
+                    if (crs.getCourseID() == courseID)
+                    {
+                        return crs;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public Course(String name, String professorName, Faculty faculty, int courseID, int units) {

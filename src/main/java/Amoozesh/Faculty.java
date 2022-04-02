@@ -23,6 +23,19 @@ public class Faculty
         this.facultyID = facultyID;
     }
 
+    public static Faculty getFaculty(int facultyID)
+    {
+        for (Faculty fc : Amoozesh.faculties)
+        {
+            if (fc.facultyID == facultyID)
+            {
+                return fc;
+            }
+        }
+        return null;
+    }
+
+
     public Faculty(String name, int facultyID) {
         this.name = name;
         this.facultyID = facultyID;
