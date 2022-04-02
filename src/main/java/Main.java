@@ -10,7 +10,7 @@ public class Main
         Amoozesh amoozesh = new Amoozesh("ali");
         amoozesh.makeSemester("400" , 23);
         amoozesh.makeFaculty("riai" , 223);
-        
+
 
 
     }

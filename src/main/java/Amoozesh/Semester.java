@@ -16,23 +16,23 @@ public class Semester
         this.semesterID = semesterNumber;
     }
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    protected ArrayList<Course> getCourses() {
+    public ArrayList<Course> getCourses() {
         return courses;
     }
 
-    protected void addCourse(Course course) {
+    public void addCourse(Course course) {
         this.courses.add(course);
     }
 
-    protected void removeCourse (Course course){
+    public void removeCourse (Course course){
         for (Course crs : courses)
         {
             if (Course.isEqual(crs , course))
@@ -42,9 +42,11 @@ public class Semester
         }
     }
 
-    protected Semester(String name, ArrayList<String> courses , int semesterID) {
+    public Semester(String name, int semesterID) {
         this.name = name;
         this.courses = new ArrayList<>();
         this.semesterID = semesterID;
     }
 }
+
+

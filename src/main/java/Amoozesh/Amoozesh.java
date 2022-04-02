@@ -27,7 +27,7 @@ public class Amoozesh
 
     public void makeSemester(String name , int ID)
     {
-        semesters.add(new Semester(name , new ArrayList<>(), ID));
+        semesters.add(new Semester(name ,ID));
     }
 
     public void makeFaculty(String name , int ID)

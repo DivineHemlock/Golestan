@@ -7,48 +7,49 @@ public class Course
     private Faculty faculty;
     private int courseID;
     private int units;
+    private int score;
 
-    protected String getName() {
+    public String getName() {
         return name;
     }
 
-    protected void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    protected String getProfessorName() {
+    public String getProfessorName() {
         return professorName;
     }
 
-    protected void setProfessorName(String professorName) {
+    public void setProfessorName(String professorName) {
         this.professorName = professorName;
     }
 
-    protected Faculty getFaculty() {
+    public Faculty getFaculty() {
         return faculty;
     }
 
-    protected void setFaculty(Faculty faculty) {
+    public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
 
-    protected int getCourseID() {
+    public int getCourseID() {
         return courseID;
     }
 
-    protected void setCourseID(int courseID) {
+    public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
 
-    protected int getUnits() {
+    public int getUnits() {
         return units;
     }
 
-    protected void setUnits(int units) {
+    public void setUnits(int units) {
         this.units = units;
     }
 
-    protected static boolean isEqual(Course crs1 , Course crs2)
+    public static boolean isEqual(Course crs1 , Course crs2)
     {
         if (crs1.courseID == crs2.courseID && crs1.faculty == crs2.faculty)
         {
@@ -59,6 +60,14 @@ public class Course
         }
 
         return false;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public Course(String name, String professorName, Faculty faculty, int courseID, int units) {
