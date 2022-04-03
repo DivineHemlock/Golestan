@@ -32,6 +32,7 @@ public class Faculty
                 return fc;
             }
         }
+        System.out.println("no faculty with this info has been registered");
         return null;
     }
 

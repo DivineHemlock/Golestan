@@ -1,5 +1,8 @@
 package Amoozesh;
 
+import Student.Student;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Course
@@ -87,6 +90,7 @@ public class Course
                 }
             }
         }
+        System.out.println("no course with this info has been registered");
         return null;
     }
 

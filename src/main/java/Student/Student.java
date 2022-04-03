@@ -113,6 +113,7 @@ public class Student
                 return std;
             }
         }
+        System.out.println("no student with this info has been registered");
         return null;
     }
 
@@ -135,6 +136,11 @@ public class Student
             System.out.println("no student with this ID has been registered");
         }
 
+    }
+
+    public static boolean isEqual(Student std1 , Student std2)
+    {
+        return std1.studentID == std2.studentID;
     }
 
     public Student(String name, String lastName, int studentID, String major, Faculty faculty, int yearOfEntry, int GPA)

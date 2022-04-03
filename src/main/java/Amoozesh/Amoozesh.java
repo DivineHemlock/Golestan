@@ -1,5 +1,6 @@
 package Amoozesh;
 
+import Professor.Professor;
 import Student.Student;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class Amoozesh
     protected static ArrayList<Semester> semesters;
     protected static ArrayList<Faculty> faculties;
     public static ArrayList<Student> students;
+    public static ArrayList<Professor> professors;
     public static boolean isAmoozeshMade = false;
 
     public static ArrayList<Faculty> getFaculties() {
@@ -19,6 +21,14 @@ public class Amoozesh
 
     public static ArrayList<Semester> getSemesters() {
         return semesters;
+    }
+
+    public static ArrayList<Student> getStudents() {
+        return students;
+    }
+
+    public static ArrayList<Professor> getProfessors() {
+        return professors;
     }
 
     public String getName() {
@@ -44,13 +54,30 @@ public class Amoozesh
         students.add(new Student(name,lastName, studentID ,major,faculty,yearOfEntry,GPA));
     }
 
-    public boolean addCourseToSemester(int semesterID , Course course)
+    public void makeProfessor(String name , String lastName , Faculty faculty , String group)
+    {
+        professors.add(new Professor(name , lastName , faculty , group));
+    }
+
+   /* public void makeCourse(String name , String professorName , Faculty faculty , int courseID , int units )
+    {
+        new Course(name,professorName,faculty,courseID,units);
+    }*/
+
+    public boolean addCourseToSemesterAndProfessor(int semesterID , Course course , String professorName , String professorLastName)
     {
         for (Semester smst : semesters)
         {
             if (semesterID == smst.getSemesterID())
             {
-                smst.addCourse(course);
+                smst.addCourse(course); // adding course to the semester
+                for (Professor dr : Amoozesh.professors) // adding course to professors course list
+                {
+                    if (dr.getName().equals(professorName) && dr.getLastName().equals(professorLastName))
+                    {
+                        dr.addCourse(course);
+                    }
+                }
                 return true;
             }
         }
@@ -62,6 +89,7 @@ public class Amoozesh
         semesters = new ArrayList<>();
         faculties = new ArrayList<>();
         students = new ArrayList<>();
+        professors = new ArrayList<>();
         isAmoozeshMade = true;
     }
 }

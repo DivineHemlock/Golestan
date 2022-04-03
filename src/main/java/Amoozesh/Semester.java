@@ -68,6 +68,11 @@ public class Semester
         return null;
     }
 
+    public static boolean isEqual(Semester smst1 , Semester smst2)
+    {
+        return smst1.semesterID == smst2.semesterID && smst1.name.equals(smst2.name);
+    }
+
 
 
     public Semester(String name, int semesterID) {
