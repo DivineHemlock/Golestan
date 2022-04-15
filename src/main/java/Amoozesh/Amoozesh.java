@@ -4,15 +4,16 @@ import Professor.Professor;
 import Student.Student;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class Amoozesh
 {
     private String name;
+    private String password;
     protected static ArrayList<Semester> semesters;
     protected static ArrayList<Faculty> faculties;
     public static ArrayList<Student> students;
     public static ArrayList<Professor> professors;
+    public static ArrayList<Amoozesh> amoozeshInstance = new ArrayList<>();
     public static boolean isAmoozeshMade = false;
 
     public static ArrayList<Faculty> getFaculties() {
@@ -39,6 +40,14 @@ public class Amoozesh
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void makeSemester(String name , int ID)
     {
         semesters.add(new Semester(name ,ID));
@@ -59,10 +68,10 @@ public class Amoozesh
         professors.add(new Professor(name , lastName , faculty , group));
     }
 
-   /* public void makeCourse(String name , String professorName , Faculty faculty , int courseID , int units )
+    public static void makeAmoozesh(String name , String password )
     {
-        new Course(name,professorName,faculty,courseID,units);
-    }*/
+        amoozeshInstance.add(new Amoozesh(name , password));
+    }
 
     public boolean addCourseToSemesterAndProfessor(int semesterID , Course course , String professorName , String professorLastName)
     {
@@ -84,8 +93,14 @@ public class Amoozesh
         return false;
     }
 
-    public Amoozesh(String name) {
+    public static Amoozesh getAmoozesh()
+    {
+        return amoozeshInstance.get(0);
+    }
+
+    public Amoozesh(String name , String password) {
         this.name = name;
+        this.password = password;
         semesters = new ArrayList<>();
         faculties = new ArrayList<>();
         students = new ArrayList<>();
