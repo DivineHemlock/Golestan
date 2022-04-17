@@ -14,7 +14,7 @@ public class Student
     private String major;
     private Faculty faculty;
     private int yearOfEntry;
-    private int GPA;
+    private double GPA;
     private int unitsInCurrentSemester;
     private ArrayList<Course> courses;
 
@@ -66,11 +66,11 @@ public class Student
         this.yearOfEntry = yearOfEntry;
     }
 
-    public int getGPA() {
+    public double getGPA() {
         return GPA;
     }
 
-    public void setGPA(int GPA) {
+    public void setGPA(double GPA) {
         this.GPA = GPA;
     }
 
