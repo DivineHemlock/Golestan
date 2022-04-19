@@ -1,10 +1,7 @@
-package Student;
-
-import Amoozesh.Amoozesh;
-import Amoozesh.Course;
-import Amoozesh.Faculty;
+package Amoozesh;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Student
 {
@@ -127,7 +124,7 @@ public class Student
                 exists = true;
                 for (int i = 0 ; i < std.courses.size() ; i++)
                 {
-                    System.out.println(std.courses.get(i).getName()+ "  " + std.courses.get(i).getFaculty().getName()+ "  " + std.courses.get(i).getProfessorName());
+                    System.out.println(std.courses.get(i).getName()+ "  " + std.courses.get(i).getFaculty().getName()+ "  " + std.courses.get(i).getProfessorName() + "  " + std.courses.get(i).getScore());
                 }
             }
         }
@@ -136,6 +133,19 @@ public class Student
             System.out.println("no student with this ID has been registered");
         }
 
+    }
+
+    public Course getStudentCourse ( int semesterID , int courseID)
+    {
+        for (Course crs : this.courses)
+        {
+            if (Course.isEqual(crs, Objects.requireNonNull(Course.getCourse(semesterID, courseID))))
+            {
+                return crs;
+            }
+        }
+        System.out.println("this course has not been registered for this student !");
+        return null;
     }
 
     public static boolean isEqual(Student std1 , Student std2)

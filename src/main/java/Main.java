@@ -3,12 +3,12 @@ import Amoozesh.Semester;
 import Amoozesh.Faculty;
 import Amoozesh.Course;
 import Professor.Professor;
-import Student.Student;
+import Amoozesh.Student;
 
-import javax.crypto.spec.PSource;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
+
+// note: add courses to semester and professor using only the addCourseToSemesterAndProfessor from the amoozesh class
 
 public class Main
 {
@@ -18,13 +18,16 @@ public class Main
         if (!Amoozesh.isAmoozeshMade)
         {
             Amoozesh.makeAmoozesh("admin", "1234");
-            System.out.println("heyo!");
         }
         Amoozesh.getAmoozesh().makeFaculty("math" , 1);
         Amoozesh.getAmoozesh().makeStudent("mohsen" , "ansari" , 400 , "cs" , Faculty.getFaculty(1) , 1400 , 18);
         Amoozesh.getAmoozesh().makeFaculty("ce" , 2);
         Amoozesh.getAmoozesh().makeSemester("1400"  , 14001);
-        Objects.requireNonNull(Semester.getSemester(14001)).addCourse(new Course("olom" , "mozhgan" , Faculty.getFaculty(1) , 0 , 3));
+        Amoozesh.getAmoozesh().makeProfessor("iman" , "kherad" , Faculty.getFaculty(1) , "cs");
+        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("olom" , "mozhgan" , Faculty.getFaculty(1) , 1 , 3),"iman" , "kherad");
+        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("a","iman" , Faculty.getFaculty(1) , 0 , 0),"iman" , "kherad");
+        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001, new Course("ap" , "iman" , Faculty.getFaculty(1), 2 , 3) ,"iman" , "kherad" );
+        Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001,1));
         //end of temp statements
         while (true) // main program loop , breaks when the program ends
         {
@@ -156,10 +159,6 @@ public class Main
                                 String tempSemesterName = amoozeshLoginFunctionScanner.next();
                                 System.out.println("enter semester ID");
                                 int tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
-                                if(Semester.getSemester(tempSemesterID) == null)
-                                {
-
-                                }
                                 Amoozesh.getAmoozesh().makeSemester(tempSemesterName, tempSemesterID);
                                 System.out.println("done !");
                                 System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
@@ -176,20 +175,32 @@ public class Main
                             case 3:
                                 System.out.println("enter semester ID :");
                                 tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
-                                System.out.println("enter professor name :");
-                                String tempProfessorName = amoozeshLoginFunctionScanner.next();
-                                System.out.println("enter professor last name :");
-                                String tempProfessorLastName = amoozeshLoginFunctionScanner.next();
-                                System.out.println("enter the course name :");
-                                String tempCourseName = amoozeshLoginFunctionScanner.next();
-                                System.out.println("enter the course faculty ID :");
-                                int tempCourseFacultyID = amoozeshLoginFunctionScanner.nextInt();
-                                System.out.println("enter the course ID :");
-                                int tempCourseID = amoozeshLoginFunctionScanner.nextInt();
-                                System.out.println("enter the course units :");
-                                int tempCourseUnits = amoozeshLoginFunctionScanner.nextInt();
-                                Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(tempSemesterID, new Course(tempCourseName, tempProfessorName, Faculty.getFaculty(tempCourseFacultyID), tempCourseID, tempCourseUnits), tempProfessorName, tempProfessorLastName);
-                                System.out.println("done !");
+                                if (Semester.getSemester(tempSemesterID) != null)
+                                {   System.out.println("enter professor name :");
+                                    String tempProfessorName = amoozeshLoginFunctionScanner.next();
+                                    System.out.println("enter professor last name :");
+                                    String tempProfessorLastName = amoozeshLoginFunctionScanner.next();
+                                    System.out.println("enter the course name :");
+                                    String tempCourseName = amoozeshLoginFunctionScanner.next();
+                                    System.out.println("enter the course faculty ID :");
+                                    int tempCourseFacultyID = amoozeshLoginFunctionScanner.nextInt();
+                                    System.out.println("enter the course ID :");
+                                    int tempCourseID = amoozeshLoginFunctionScanner.nextInt();
+                                    System.out.println("enter the course units :");
+                                    int tempCourseUnits = amoozeshLoginFunctionScanner.nextInt();
+                                    Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(tempSemesterID, new Course(tempCourseName, tempProfessorName, Faculty.getFaculty(tempCourseFacultyID), tempCourseID, tempCourseUnits), tempProfessorName, tempProfessorLastName);
+                                    System.out.println("done !");
+                                    System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
+                                    choice = amoozeshLoginFunctionScanner.nextInt();
+                                    if (choice == 1)
+                                    {
+                                        goBackToAmoozeshLoginFunction = true;
+                                    }
+                                    else
+                                    {
+                                        return ;
+                                    }
+                                }
                                 System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
                                 choice = amoozeshLoginFunctionScanner.nextInt();
                                 if (choice == 1)
@@ -398,12 +409,62 @@ public class Main
                         tempStudentID = amoozeshEditFunctionScanner.nextInt();
                         if (Student.getStudent(tempStudentID) != null)
                         {
-                            System.out.println("enter the course semester ID :");
-                            int tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                            System.out.println("enter the course ID :");
-                            int tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                            if (Course.getCourse(tempSemesterID , tempCourseID) != null)
+                            System.out.println("what do you want to do?");
+                            System.out.println("1-add course \n2-remove course \n3-set course score");
+                            int choice = amoozeshEditFunctionScanner.nextInt();
+                            switch (choice)
                             {
+                                case 1:
+                                    System.out.println("enter the course semesters ID :");
+                                    int tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                    System.out.println("enter the course ID :");
+                                    int tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
+                                    {
+                                        Objects.requireNonNull(Student.getStudent(tempStudentID)).addCourse(Course.getCourse(tempSemesterID,tempCourseID));
+                                    }
+                                    break;
+                                case 2:
+                                    System.out.println("enter the course semester ID :");
+                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                    System.out.println("enter the course ID :");
+                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
+                                    {
+                                        Objects.requireNonNull(Student.getStudent(tempStudentID)).removeCourse(Course.getCourse(tempSemesterID,tempCourseID));
+                                    }
+                                    break;
+                                case 3:
+                                    System.out.println("enter the course semester ID :");
+                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                    System.out.println("enter the course ID :");
+                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                    double tempScore;
+                                    if (Objects.requireNonNull(Student.getStudent(tempStudentID)).getStudentCourse(tempSemesterID,tempCourseID) != null)
+                                    {
+                                        System.out.println("enter the course score , score should be between 0.0 and 20.0 :");
+                                        while (true)
+                                        {
+                                            tempScore = amoozeshEditFunctionScanner.nextDouble();
+                                            if (tempScore >= 0.0 && tempScore <= 20.0)
+                                            {
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                System.out.println("invalid score , enter a score between 0.0 and 20.0 :");
+                                            }
+                                        }
+                                        for (Course crs : Objects.requireNonNull(Student.getStudent(tempStudentID)).getCourses())
+                                        {
+                                            if (Course.isEqual(crs , Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID))))
+                                            {
+                                                crs.setScore(tempScore);
+                                            }
+                                        }
+
+                                    }
+                                    break;
 
                             }
                         }
@@ -427,7 +488,7 @@ public class Main
                             tempString = amoozeshEditFunctionScanner.next();
                             Objects.requireNonNull(Semester.getSemester(tempSemesterID)).setName(tempString);
                         }
-                        break;
+                    break;
                     case 2:
                         System.out.println("enter the old semester ID");
                         tempSemesterID = amoozeshEditFunctionScanner.nextInt();
@@ -437,7 +498,7 @@ public class Main
                             tempInt = amoozeshEditFunctionScanner.nextInt();
                             Objects.requireNonNull(Semester.getSemester(tempSemesterID)).setSemesterID(tempInt);
                         }
-                        break;
+                    break;
                     case 3:
                         System.out.println("enter the semester ID");
                         tempSemesterID = amoozeshEditFunctionScanner.nextInt();
@@ -457,7 +518,7 @@ public class Main
                                         tempString = amoozeshEditFunctionScanner.next();
                                         Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setName(tempString);
                                     }
-                                    break;
+                                break;
                                 case 2:
                                     System.out.println("enter the course ID");
                                     tempCourseID = amoozeshEditFunctionScanner.nextInt();
@@ -467,7 +528,7 @@ public class Main
                                         tempString = amoozeshEditFunctionScanner.next();
                                         Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setProfessorName(tempString);
                                     }
-                                    break;
+                                break;
                                 case 3:
                                     System.out.println("enter the course ID :");
                                     tempCourseID = amoozeshEditFunctionScanner.nextInt();
@@ -477,7 +538,7 @@ public class Main
                                         tempInt = amoozeshEditFunctionScanner.nextInt();
                                         Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setFaculty(Faculty.getFaculty(tempInt));
                                     }
-                                    break;
+                                break;
                                 case 4:
                                     System.out.println("enter the old course ID :");
                                     tempCourseID = amoozeshEditFunctionScanner.nextInt();
@@ -487,7 +548,7 @@ public class Main
                                         tempInt = amoozeshEditFunctionScanner.nextInt();
                                         Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setCourseID(tempInt);
                                     }
-                                    break;
+                                break;
                                 case 5:
                                     System.out.println("enter the course ID :");
                                     tempCourseID = amoozeshEditFunctionScanner.nextInt();
@@ -497,31 +558,87 @@ public class Main
                                         tempInt = amoozeshEditFunctionScanner.nextInt();
                                         Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setUnits(tempInt);
                                     }
-                                    break;
+                                break;
                             }
                         }
-                        break;
+                    break;
 
                 }
-                break;
+            break;
             case 6: // editing the professor
                 System.out.println("what do you want to edit ? ");
                 System.out.println("1-professor name \n2-professor last name \n3-professor faculty \n4-professor group");
-                System.out.println("5-professor courses");
+                System.out.println("5-remove professor courses");
                 int choice = amoozeshEditFunctionScanner.nextInt();
                 switch (choice)
                 {
                     case 1:
-                        System.out.println("enter professors first name : ");
+                        System.out.println("enter professors old first name : ");
                         String tempFirstName = amoozeshEditFunctionScanner.next();
                         System.out.println("enter professors last name :  ");
                         String tempLastName = amoozeshEditFunctionScanner.next();
                         if (Professor.getProfessor(tempFirstName,tempLastName) != null)
                         {
-
+                            System.out.println("enter the professors new name :");
+                            String tempNewFirstName = amoozeshEditFunctionScanner.next();
+                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setName(tempNewFirstName);
                         }
+                    break;
+                    case 2:
+                        System.out.println("enter professors first name : ");
+                        tempFirstName = amoozeshEditFunctionScanner.next();
+                        System.out.println("enter professors old last name :  ");
+                        tempLastName = amoozeshEditFunctionScanner.next();
+                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
+                        {
+                            System.out.println("enter the professors new last name :");
+                            String tempNewLastName = amoozeshEditFunctionScanner.next();
+                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setLastName(tempNewLastName);
+                        }
+                    break;
+                    case 3:
+                        System.out.println("enter professors first name : ");
+                        tempFirstName = amoozeshEditFunctionScanner.next();
+                        System.out.println("enter professors last name :  ");
+                        tempLastName = amoozeshEditFunctionScanner.next();
+                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
+                        {
+                            System.out.println("enter the new faculty ID :");
+                            int tempFacultyID = amoozeshEditFunctionScanner.nextInt();
+                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setFaculty(Faculty.getFaculty(tempFacultyID));
+                        }
+                    break;
+                    case 4:
+                        System.out.println("enter professors first name : ");
+                        tempFirstName = amoozeshEditFunctionScanner.next();
+                        System.out.println("enter professors last name :  ");
+                        tempLastName = amoozeshEditFunctionScanner.next();
+                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
+                        {
+                            System.out.println("enter the new group name :");
+                            String tempGroupName = amoozeshEditFunctionScanner.next();
+                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setGroup(tempGroupName);
+                        }
+                    break;
+                    case 5:
+                        System.out.println("note : you can only remove courses from here , to add courses , go to : main menu > login > amoozesh > enter your user and password and select new course.");
+                        System.out.println("enter professors first name : ");
+                        tempFirstName = amoozeshEditFunctionScanner.next();
+                        System.out.println("enter professors last name :  ");
+                        tempLastName = amoozeshEditFunctionScanner.next();
+                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
+                        {
+                            System.out.println("enter the course semesters ID :");
+                            int tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                            System.out.println("enter the course ID :");
+                            int tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                            Amoozesh.getAmoozesh().removeCourseFromSemesterAndProfessor(tempSemesterID , Course.getCourse(tempSemesterID,tempCourseID) , tempFirstName , tempLastName);
+                            System.out.println("the current professor courses are : ");
+                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).printCourses(Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)));
+                        }
+                    break;
                 }
-
+            break;
         }
     }
 
@@ -531,10 +648,12 @@ public class Main
 
 
 }
-// todo : amoozesh should be able to edit student courses
+// todo : add default case for switches ( so if we enter an invalid number we get an error )
 
 //todo : remove redundant packages
 
 // todo : input validation
 
 // todo : add input validation for cases where an object is being duplicated in amoozeshLoginFunction
+
+// todo : bug fix : when changing a name or string , spaces will ruin the input : if we enter ali reza , only ali will be input

@@ -1,9 +1,9 @@
 package Amoozesh;
 
 import Professor.Professor;
-import Student.Student;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Amoozesh
 {
@@ -73,7 +73,7 @@ public class Amoozesh
         amoozeshInstance.add(new Amoozesh(name , password));
     }
 
-    public boolean addCourseToSemesterAndProfessor(int semesterID , Course course , String professorName , String professorLastName)
+    public void addCourseToSemesterAndProfessor(int semesterID , Course course , String professorName , String professorLastName)
     {
         for (Semester smst : semesters)
         {
@@ -87,10 +87,64 @@ public class Amoozesh
                         dr.addCourse(course);
                     }
                 }
-                return true;
+                return;
             }
         }
-        return false;
+    }
+
+    public void removeCourseFromSemesterAndProfessor(int semesterID , Course course , String professorName , String professorLastName)
+    {
+        boolean semesterFlag = false;
+        boolean professorFlag = false;
+        for (Semester smst : semesters) // removing the course from the semester
+        {
+            if (smst.getSemesterID() == semesterID)
+            {
+                for (Course crs : smst.getCourses())
+                {
+                    if (Course.isEqual(crs,course))
+                    {
+                        smst.removeCourse(course);
+                        semesterFlag = true;
+                    }
+                    if (semesterFlag)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (semesterFlag)
+            {
+                break;
+            }
+        }
+        if (!semesterFlag)
+        {
+            System.out.println("no such course in this semester !");
+            return;
+        }
+        for (Professor prof : professors)
+        {
+            if (prof.getName().equals(professorName) && prof.getLastName().equals(professorLastName))
+            {
+                for (Course crs : prof.getCourses())
+                {
+                    if (Course.isEqual(crs,course))
+                    {
+                        prof.removeCourse(course);
+                        professorFlag = true;
+                    }
+                    if (professorFlag)
+                    {
+                        break;
+                    }
+                }
+            }
+            if (professorFlag)
+            {
+                break;
+            }
+        }
     }
 
     public static Amoozesh getAmoozesh()

@@ -3,7 +3,7 @@ package Professor;
 import Amoozesh.Amoozesh;
 import Amoozesh.Course;
 import Amoozesh.Faculty;
-import Student.Student;
+import Amoozesh.Student;
 import Amoozesh.Semester;
 
 import java.util.ArrayList;
@@ -16,6 +16,10 @@ public class Professor
     private String group;
     private ArrayList<Course> courses;
 
+    public ArrayList<Course> getCourses()
+    {
+        return this.courses;
+    }
 
     public String getName() {
         return name;
@@ -52,6 +56,18 @@ public class Professor
     public void addCourse(Course course)
     {
         this.courses.add(course);
+    }
+
+    public void removeCourse (Course course)
+    {
+        for (Course crs : this.courses)
+        {
+            if (Course.isEqual(course,crs))
+            {
+                this.courses.remove(course);
+                return;
+            }
+        }
     }
 
     public boolean setScore (Course course , Student student , int score)

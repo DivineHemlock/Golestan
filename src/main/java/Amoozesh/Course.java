@@ -1,8 +1,5 @@
 package Amoozesh;
 
-import Student.Student;
-
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Course
@@ -12,7 +9,7 @@ public class Course
     private Faculty faculty;
     private int courseID;
     private int units;
-    private int score;
+    private double score;
 
     public String getName() {
         return name;
@@ -67,11 +64,11 @@ public class Course
         return false;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

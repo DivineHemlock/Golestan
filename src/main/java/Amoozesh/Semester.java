@@ -47,11 +47,12 @@ public class Semester
     }
 
     public void removeCourse (Course course){
-        for (Course crs : courses)
+        for (Course crs : this.courses)
         {
             if (Course.isEqual(crs , course))
             {
-                courses.remove(course);
+                this.courses.remove(course);
+                return;
             }
         }
     }
@@ -65,6 +66,7 @@ public class Semester
                 return smst;
             }
         }
+        System.out.println("no such semester exists ! ");
         return null;
     }
 
