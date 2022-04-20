@@ -14,7 +14,18 @@ public class Professor
     private String lastName;
     private Faculty faculty;
     private String group;
+    private String password;
     private ArrayList<Course> courses;
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 
     public ArrayList<Course> getCourses()
     {
@@ -147,11 +158,12 @@ public class Professor
         return dr1.name.equals(dr2.name) && dr1.lastName.equals(dr2.lastName) && dr1.group.equals(dr2.group);
     }
 
-    public Professor(String name, String lastName, Faculty faculty, String group) {
+    public Professor(String name, String lastName, Faculty faculty, String group , String password) {
         this.name = name;
         this.lastName = lastName;
         this.faculty = faculty;
         this.group = group;
+        this.password = password;
         this.courses = new ArrayList<>();
     }
 }

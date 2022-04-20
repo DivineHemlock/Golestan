@@ -9,8 +9,8 @@ public class Amoozesh
 {
     private String name;
     private String password;
-    protected static ArrayList<Semester> semesters;
-    protected static ArrayList<Faculty> faculties;
+    public static ArrayList<Semester> semesters;
+    public static ArrayList<Faculty> faculties;
     public static ArrayList<Student> students;
     public static ArrayList<Professor> professors;
     public static ArrayList<Amoozesh> amoozeshInstance = new ArrayList<>();
@@ -63,9 +63,9 @@ public class Amoozesh
         students.add(new Student(name,lastName, studentID ,major,faculty,yearOfEntry,GPA));
     }
 
-    public void makeProfessor(String name , String lastName , Faculty faculty , String group)
+    public void makeProfessor(String name , String lastName , Faculty faculty , String group , String password)
     {
-        professors.add(new Professor(name , lastName , faculty , group));
+        professors.add(new Professor(name , lastName , faculty , group , password));
     }
 
     public static void makeAmoozesh(String name , String password )

@@ -5,6 +5,7 @@ import Amoozesh.Course;
 import Professor.Professor;
 import Amoozesh.Student;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -21,14 +22,16 @@ public class Main
         }
         Amoozesh.getAmoozesh().makeFaculty("math" , 1);
         Amoozesh.getAmoozesh().makeStudent("mohsen" , "ansari" , 400 , "cs" , Faculty.getFaculty(1) , 1400 , 18);
+        Amoozesh.getAmoozesh().makeStudent("mehdi" , "ahmadi" , 401 , "cs" , Faculty.getFaculty(1) , 1400 , 18);
         Amoozesh.getAmoozesh().makeFaculty("ce" , 2);
         Amoozesh.getAmoozesh().makeSemester("1400"  , 14001);
-        Amoozesh.getAmoozesh().makeProfessor("iman" , "kherad" , Faculty.getFaculty(1) , "cs");
-        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("olom" , "mozhgan" , Faculty.getFaculty(1) , 1 , 3),"iman" , "kherad");
-        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("a","iman" , Faculty.getFaculty(1) , 0 , 0),"iman" , "kherad");
+        Amoozesh.getAmoozesh().makeProfessor("iman" , "kherad" , Faculty.getFaculty(1) , "cs" , "1234");
+        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("cns" , "iman" , Faculty.getFaculty(1) , 1 , 3),"iman" , "kherad");
+        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("bp","iman" , Faculty.getFaculty(1) , 0 , 0),"iman" , "kherad");
         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001, new Course("ap" , "iman" , Faculty.getFaculty(1), 2 , 3) ,"iman" , "kherad" );
         Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001,1));
-        //end of temp statements
+        Objects.requireNonNull(Student.getStudent(401)).addCourse(Course.getCourse(14001, 1));
+         //end of temp statements
         while (true) // main program loop , breaks when the program ends
         {
             System.out.println("welcome to the educational system");
@@ -89,18 +92,29 @@ public class Main
                     else
                     {
                         System.out.println("there is no amoozesh account made !");
+                        System.out.println("going back to the main menu...");
+                        isChoiceValid = true;
                     }
-                    break;
+                break;
                 case 2 :
-                    //professorLoginFunction();
-                    isChoiceValid = true;
-                    break;
+                    if (Amoozesh.isAmoozeshMade && !Amoozesh.professors.isEmpty())
+                    {
+                        professorLoginFunction();
+                        isChoiceValid = true;
+                    }
+                    else
+                    {
+                        System.out.println("there is no professor account made !");
+                        System.out.println("going back to the main menu...");
+                        isChoiceValid = true;
+                    }
+                break;
                 case 3 :
                     //studentLoginFunction();
                     isChoiceValid = true;
-                    break;
+                break;
                 default:
-                    break;
+                break;
             }
             if (isChoiceValid)
             {
@@ -639,6 +653,106 @@ public class Main
                     break;
                 }
             break;
+        }
+    }
+
+    public static void professorLoginFunction()
+    {
+        while (true)
+        {
+            ArrayList<Integer> tempArrayOfStudentID = new ArrayList<>();
+            boolean doesAnyStudentHaveThisClass = false;
+            Scanner professorLoginFunctionScanner = new Scanner(System.in);
+            System.out.println("enter your first name :");
+            String tempFirstName = professorLoginFunctionScanner.next();
+            System.out.println("enter your last name :");
+            String tempLastName = professorLoginFunctionScanner.next();
+            System.out.println("enter your password :");
+            String tempPassword = professorLoginFunctionScanner.next();
+            for (Professor prof : Amoozesh.professors) {
+                if (prof.getName().equals(tempFirstName) && prof.getLastName().equals(tempLastName) && prof.getPassword().equals(tempPassword)) {
+                    System.out.println("login successful ! ");
+                    while (true)
+                    {
+                        System.out.println("here is your class list : ");
+                        Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).printCourses(Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)));
+                        System.out.println("enter the name of a course to see all of the students in that course or enter \"none\" to go back to main menu :");
+                        String tempCourseName = professorLoginFunctionScanner.next();
+                        if (tempCourseName.equals("none"))
+                        {
+                            return;
+                        }
+                        for (Student std : Amoozesh.getStudents())
+                        {
+                            for (Course crs : std.getCourses())
+                            {
+                                if (crs.getName().equals(tempCourseName))
+                                {
+                                    doesAnyStudentHaveThisClass = true;
+                                    System.out.println(std.getName() + "  " + std.getStudentID());
+                                    tempArrayOfStudentID.add(std.getStudentID());
+                                }
+                            }
+                        }
+                        if (!doesAnyStudentHaveThisClass)
+                        {
+                            System.out.println("either no student is currently enrolled in this course or this course is not in your course list !");
+                            System.out.println("going back to course list...");
+                            continue;
+                        }
+                        int tempStudentID;
+                        while (true)
+                        {
+                            System.out.println("enter the ID of the student which you would like to set the score for :");
+                            tempStudentID = professorLoginFunctionScanner.nextInt();
+                            if (tempArrayOfStudentID.contains(tempStudentID))
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                System.out.println("this ID doesnt exist in this list ! , try again :");
+                            }
+                            // what if the ID is wrong?
+                        }
+                        System.out.println("enter a score between 0.0 and 20.0 :");
+                        double tempScore;
+                        while (true)
+                        {
+                            tempScore = professorLoginFunctionScanner.nextDouble();
+                            if (tempScore >= 0.0 && tempScore <= 20.0)
+                            {
+                                break;
+                            } else
+                            {
+                                System.out.println("invalid score , try again :");
+                            }
+                        }
+                        for (Student std : Amoozesh.students) {
+                            if (std.getStudentID() == tempStudentID)
+                            {
+                                for (Course crs : std.getCourses())
+                                {
+                                    if (crs.getName().equals(tempCourseName))
+                                    {
+                                        crs.setScore(tempScore);
+                                    }
+                                }
+                            }
+                        }
+                        System.out.println("done !");
+                        System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
+                        int choice = professorLoginFunctionScanner.nextInt();
+                        if (choice != 1)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+            System.out.println("no such professor has been registered !");
+            System.out.println("going back to main menu...");
+            return;
         }
     }
 
