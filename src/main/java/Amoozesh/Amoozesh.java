@@ -1,9 +1,6 @@
 package Amoozesh;
 
-import Professor.Professor;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Amoozesh
 {
@@ -58,9 +55,9 @@ public class Amoozesh
         faculties.add(new Faculty(name , ID));
     }
 
-    public void makeStudent(String name , String lastName , int studentID , String major , Faculty faculty , int yearOfEntry , int GPA)
+    public void makeStudent(String name , String lastName , int studentID , String major , Faculty faculty , int yearOfEntry , int GPA , String password)
     {
-        students.add(new Student(name,lastName, studentID ,major,faculty,yearOfEntry,GPA));
+        students.add(new Student(name,lastName, studentID ,major,faculty,yearOfEntry,GPA,password));
     }
 
     public void makeProfessor(String name , String lastName , Faculty faculty , String group , String password)

@@ -42,6 +42,23 @@ public class Semester
         }
     }
 
+    public void printCoursesInSemesterForASpecificFaculty (int semesterID , int facultyID)
+    {
+        for (Semester smst : Amoozesh.semesters)
+        {
+            if (smst.semesterID == semesterID)
+            {
+                for (int i = 0 ; i < smst.courses.size() ; i++)
+                {
+                    if (smst.courses.get(i).getFaculty().getFacultyID() == facultyID)
+                    {
+                        System.out.println("course name : " + smst.courses.get(i).getName() + "  " + "course faculty : " + smst.courses.get(i).getFaculty().getName() + "  " + "professor name : " + smst.courses.get(i).getProfessorName() + "  " + "course ID : " + smst.courses.get(i).getCourseID() + "  " + "course units : " + smst.courses.get(i).getUnits());
+                    }
+                }
+            }
+        }
+    }
+
     public void addCourse(Course course) {
         this.courses.add(course);
     }

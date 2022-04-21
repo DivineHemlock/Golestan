@@ -1,10 +1,4 @@
-package Professor;
-
-import Amoozesh.Amoozesh;
-import Amoozesh.Course;
-import Amoozesh.Faculty;
-import Amoozesh.Student;
-import Amoozesh.Semester;
+package Amoozesh;
 
 import java.util.ArrayList;
 

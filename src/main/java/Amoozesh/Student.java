@@ -13,7 +13,18 @@ public class Student
     private int yearOfEntry;
     private double GPA;
     private int unitsInCurrentSemester;
+    private String password;
     private ArrayList<Course> courses;
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 
     public String getName() {
         return name;
@@ -97,8 +108,8 @@ public class Student
         return false;
     }
 
-    public void setUnitsInCurrentSemester(int unitsInCurrentSemester) {
-        this.unitsInCurrentSemester = unitsInCurrentSemester;
+    public void addUnitsInCurrentSemester(int unitsInCurrentSemester) {
+        this.unitsInCurrentSemester += unitsInCurrentSemester;
     }
 
     public static Student getStudent(int studentID)
@@ -124,7 +135,7 @@ public class Student
                 exists = true;
                 for (int i = 0 ; i < std.courses.size() ; i++)
                 {
-                    System.out.println(std.courses.get(i).getName()+ "  " + std.courses.get(i).getFaculty().getName()+ "  " + std.courses.get(i).getProfessorName() + "  " + std.courses.get(i).getScore());
+                    System.out.println("course name : " + std.courses.get(i).getName()+ "  " + "faculty : " + std.courses.get(i).getFaculty().getName()+ "  " + "professor : dr." + std.courses.get(i).getProfessorName());
                 }
             }
         }
@@ -132,7 +143,34 @@ public class Student
         {
             System.out.println("no student with this ID has been registered");
         }
+    }
 
+    public void printScoresOfStudent(int studentID)
+    {
+        boolean exists = false;
+        for (Student std : Amoozesh.students)
+        {
+            if (std.getStudentID() == studentID)
+            {
+                exists = true;
+                for (int i = 0 ; i < std.courses.size() ; i++)
+                {
+                    System.out.print("course name : " + std.courses.get(i).getName());
+                    if (std.courses.get(i).getScore() == 0)
+                    {
+                        System.out.println("  " + "no score has been declared yet !");
+                    }
+                    else
+                    {
+                        System.out.println("  " + std.courses.get(i).getScore());
+                    }
+                }
+            }
+        }
+        if (!exists)
+        {
+            System.out.println("no student with this ID has been registered");
+        }
     }
 
     public Course getStudentCourse ( int semesterID , int courseID)
@@ -153,7 +191,7 @@ public class Student
         return std1.studentID == std2.studentID;
     }
 
-    public Student(String name, String lastName, int studentID, String major, Faculty faculty, int yearOfEntry, int GPA)
+    public Student(String name, String lastName, int studentID, String major, Faculty faculty, int yearOfEntry, int GPA , String password)
     {
         this.name = name;
         this.lastName = lastName;
@@ -163,6 +201,7 @@ public class Student
         this.yearOfEntry = yearOfEntry;
         this.GPA = GPA;
         this.unitsInCurrentSemester = 0;
+        this.password = password;
         this.courses = new ArrayList<>();
     }
 }
