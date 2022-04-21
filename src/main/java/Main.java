@@ -45,22 +45,22 @@ public class Main
             while (true) // getting the choice while
             {
                 boolean goingBackToMainMenu = false;
-                int choice = input.nextInt();
+                String  choice = input.next();
                 boolean isChoiceValid = false;
                 switch (choice)
                 {
-                    case 1:
+                    case "1":
                         loginFunction();
                         isChoiceValid = true;
-                        break;
-                    case 2:
-                        //signupFunction();
+                    break;
+                    case "2":
+                        signupFunction();
                         isChoiceValid = true;
-                        break;
-                    case 3:
+                    break;
+                    case "3":
                         System.exit(0);
                     default:
-                        break;
+                    break;
                 }
                 if (isChoiceValid)
                 {
@@ -79,65 +79,54 @@ public class Main
 
     public static void loginFunction()
     {
-        System.out.println("enter your class : \n1-amoozesh  \n2-professor \n3-student");
+        System.out.println("enter your class : \n1-amoozesh  \n2-professor \n3-student \n4-return to main menu");
         Scanner loginFunctionScanner = new Scanner(System.in);
-        boolean isChoiceValid = false;
         while(true)
         {
-            int temp = loginFunctionScanner.nextInt();
+            String  temp = loginFunctionScanner.next();
             switch (temp)
             {
-                case 1 :
+                case "1" :
                     if (Amoozesh.isAmoozeshMade)
                     {
                         amoozeshLoginFunction();
-                        isChoiceValid = true;
                     }
                     else
                     {
                         System.out.println("there is no amoozesh account made !");
                         System.out.println("going back to the main menu...");
-                        isChoiceValid = true;
                     }
                 break;
-                case 2 :
+                case "2" :
                     if (Amoozesh.isAmoozeshMade && !Amoozesh.professors.isEmpty())
                     {
                         professorLoginFunction();
-                        isChoiceValid = true;
                     }
                     else
                     {
                         System.out.println("there is no professor account made !");
                         System.out.println("going back to the main menu...");
-                        isChoiceValid = true;
                     }
                 break;
-                case 3 :
+                case "3" :
                     if (Amoozesh.isAmoozeshMade && !Amoozesh.students.isEmpty())
                     {
                         studentLoginFunction();
-                        isChoiceValid = true;
                     }
                     else
                     {
                         System.out.println("there is no student account made !");
                         System.out.println("going back to the main menu...");
-                        isChoiceValid = true;
                     }
                 break;
+                case "4":
+                return;
                 default:
+                    System.out.println("invalid input try again");
                 break;
             }
-            if (isChoiceValid)
-            {
-                break;
-            }
-            else
-            {
-                System.out.println("invalid input try again");
-                continue;
-            }
+            break;
+
         }
     }
 
@@ -191,35 +180,40 @@ public class Main
                                 }
                             break;
                             case 3:
-                                System.out.println("enter semester ID :");
-                                tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
-                                if (Semester.getSemester(tempSemesterID) != null)
-                                {   System.out.println("enter professor name :");
-                                    String tempProfessorName = amoozeshLoginFunctionScanner.next();
-                                    System.out.println("enter professor last name :");
-                                    String tempProfessorLastName = amoozeshLoginFunctionScanner.next();
-                                    System.out.println("enter the course name :");
-                                    String tempCourseName = amoozeshLoginFunctionScanner.next();
-                                    System.out.println("enter the course faculty ID :");
-                                    int tempCourseFacultyID = amoozeshLoginFunctionScanner.nextInt();
-                                    System.out.println("enter the course ID :");
-                                    int tempCourseID = amoozeshLoginFunctionScanner.nextInt();
-                                    System.out.println("enter the course units :");
-                                    int tempCourseUnits = amoozeshLoginFunctionScanner.nextInt();
-                                    Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(tempSemesterID, new Course(tempCourseName, tempProfessorName, Faculty.getFaculty(tempCourseFacultyID), tempCourseID, tempCourseUnits), tempProfessorName, tempProfessorLastName);
-                                    System.out.println("done !");
+                                if (!Amoozesh.semesters.isEmpty())
+                                {
+                                    System.out.println("enter semester ID :");
+                                    tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
+                                    if (Semester.getSemester(tempSemesterID) != null) {
+                                        System.out.println("enter professor name :");
+                                        String tempProfessorName = amoozeshLoginFunctionScanner.next();
+                                        System.out.println("enter professor last name :");
+                                        String tempProfessorLastName = amoozeshLoginFunctionScanner.next();
+                                        System.out.println("enter the course name :");
+                                        String tempCourseName = amoozeshLoginFunctionScanner.next();
+                                        System.out.println("enter the course faculty ID :");
+                                        int tempCourseFacultyID = amoozeshLoginFunctionScanner.nextInt();
+                                        System.out.println("enter the course ID :");
+                                        int tempCourseID = amoozeshLoginFunctionScanner.nextInt();
+                                        System.out.println("enter the course units :");
+                                        int tempCourseUnits = amoozeshLoginFunctionScanner.nextInt();
+                                        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(tempSemesterID, new Course(tempCourseName, tempProfessorName, Faculty.getFaculty(tempCourseFacultyID), tempCourseID, tempCourseUnits), tempProfessorName, tempProfessorLastName);
+                                        System.out.println("done !");
+                                        System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
+                                        choice = amoozeshLoginFunctionScanner.nextInt();
+                                        if (choice != 1) {
+                                            return;
+                                        }
+                                    }
                                     System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
                                     choice = amoozeshLoginFunctionScanner.nextInt();
-                                    if (choice != 1)
-                                    {
+                                    if (choice != 1) {
                                         return;
                                     }
                                 }
-                                System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
-                                choice = amoozeshLoginFunctionScanner.nextInt();
-                                if (choice != 1)
+                                else
                                 {
-                                    return;
+                                    System.out.println("no semester exists! , to make a course you need to make at least one semester !");
                                 }
                             break;
                             case 4:
@@ -1038,6 +1032,147 @@ public class Main
         }
     }
 
+    public static void signupFunction()
+    {
+        Scanner signupFunctionScanner = new Scanner(System.in);
+        while (true)
+        {
+            System.out.println("who do you want to signup ? \n1-amoozesh \n2-professor \n3-student \n4-return to main menu");
+            String choice = signupFunctionScanner.next();
+            switch (choice)
+            {
+                case "1":
+                    if (!Amoozesh.isAmoozeshMade)
+                    {
+                        System.out.println("enter your name :");
+                        String tempName = signupFunctionScanner.next();
+                        System.out.println("enter your password :");
+                        String tempPassword = signupFunctionScanner.next();
+                        Amoozesh.makeAmoozesh(tempName,tempPassword);
+                        System.out.println("done !");
+                        System.out.println("enter 1 to stay in signup , enter any other thing to return to main menu :");
+                        choice = signupFunctionScanner.next();
+                        if (!choice.equals("1"))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("amoozesh account already exists !");
+                    }
+                break;
+                case "2":
+                    if (Amoozesh.isAmoozeshMade)
+                    {
+                        System.out.println("enter the professors name :");
+                        String tempName = signupFunctionScanner.next();
+                        System.out.println("enter the professors last name :");
+                        String tempLastName = signupFunctionScanner.next();
+                        int tempFacultyID;
+                        while (true)
+                        {
+                            System.out.println("enter the professors faculty ID :");
+                            tempFacultyID = signupFunctionScanner.nextInt();
+                            if (!Amoozesh.faculties.contains(Faculty.getFaculty(tempFacultyID)))
+                            {
+                                System.out.println("no such faculty exists !");
+                                System.out.println("enter 1 to try again , enter any other thing to return to main menu :");
+                                String temp = signupFunctionScanner.next();
+                                if (!temp.equals("1"))
+                                {
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        System.out.println("enter the professors group :");
+                        String tempGroup = signupFunctionScanner.next();
+                        System.out.println("enter the professors password :");
+                        String tempPassword = signupFunctionScanner.next();
+                        Amoozesh.getAmoozesh().makeProfessor(tempName,tempLastName,Faculty.getFaculty(tempFacultyID),tempGroup,tempPassword);
+                        System.out.println("done !");
+                        System.out.println("enter 1 to stay in signup , enter any other thing to return to main menu :");
+                        choice = signupFunctionScanner.next();
+                        if (!choice.equals("1"))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("no amoozesh account exists ! , to signup a professor you need to make an amoozesh account and make a faculty first !");
+                        return;
+                    }
+                break;
+                case "3":
+                    if (Amoozesh.isAmoozeshMade)
+                    {
+                        if (!Amoozesh.faculties.isEmpty())
+                        {
+                            System.out.println("enter the students name :");
+                            String tempName = signupFunctionScanner.next();
+                            System.out.println("enter the students last name :");
+                            String tempLastName = signupFunctionScanner.next();
+                            System.out.println("enter the students ID :");
+                            int tempID = signupFunctionScanner.nextInt();
+                            System.out.println("enter the students major :");
+                            String tempMajor = signupFunctionScanner.next();
+                            int tempFacultyID;
+                            while (true)
+                            {
+                                System.out.println("enter the students faculty ID :");
+                                tempFacultyID = signupFunctionScanner.nextInt();
+                                if (!Amoozesh.faculties.contains(Faculty.getFaculty(tempFacultyID)))
+                                {
+                                    System.out.println("no such faculty exists! enter 1 to try again or enter any other thing to return to main menu :");
+                                    String choice_2 = signupFunctionScanner.next();
+                                    if (!choice_2.equals("1"))
+                                    {
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            System.out.println("enter the students year of entry :");
+                            int tempYear = signupFunctionScanner.nextInt();
+                            System.out.println("enter the students password :");
+                            String tempPassword = signupFunctionScanner.next();
+                            Amoozesh.getAmoozesh().makeStudent(tempName,tempLastName,tempID,tempMajor,Faculty.getFaculty(tempFacultyID),tempYear,0,tempPassword);
+                            System.out.println("done !");
+                            System.out.println("enter 1 to stay in signup , enter any other thing to return to main menu :");
+                            choice = signupFunctionScanner.next();
+                            if (!choice.equals("1"))
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            System.out.println("no faculties exist! , to signup a student , at least one faculty must be made ! ");
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("no amoozesh account exists! , to signup a student you need to make an amoozesh account first!");
+                    }
+                break;
+                case "4":
+                return;
+                default:
+                    System.out.println("invalid input , try again :");
+                break;
+            }
+        }
+
+    }
+
 
 
 
@@ -1047,6 +1182,6 @@ public class Main
 
 // todo : input validation
 
-// todo : add input validation for cases where an object is being duplicated in amoozeshLoginFunction
+// todo : add input validation for cases where an object is being duplicated 
 
 
