@@ -33,8 +33,8 @@ public class Main
          Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("C","kheradpishe" , Faculty.getFaculty(1) , 5 , 3),"iman" , "kherad");
          Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("D","kheradpishe" , Faculty.getFaculty(1) , 6 , 3),"iman" , "kherad");
         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001, new Course("E" , "kheradpishe" , Faculty.getFaculty(1), 7 , 3) ,"iman" , "kherad" );
-        //Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001,1));
-        //Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001, 2));
+        Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001,1));
+        Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001, 2));
         //end of temp statements
         while (true) // main program loop , breaks when the program ends
         {
@@ -134,6 +134,7 @@ public class Main
     {
         while (true)
         {
+            boolean exceptionFlag = false;
             System.out.println("enter your account name :");
             Scanner amoozeshLoginFunctionScanner = new Scanner(System.in);
             String tempName = amoozeshLoginFunctionScanner.next();
@@ -154,11 +155,20 @@ public class Main
                             case "1":
                                 System.out.println("enter the faculty name :");
                                 String tempFacultyName = amoozeshLoginFunctionScanner.next();
-                                int tempFacultyID;
+                                int tempFacultyID = 0;
                                 while (true)
                                 {
                                     System.out.println("enter faculty ID (number)");
-                                    tempFacultyID = amoozeshLoginFunctionScanner.nextInt();
+                                    try {
+                                        tempFacultyID = amoozeshLoginFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshLoginFunctionScanner.next();
+                                        System.out.println("invalid input type , returning to your account...");
+                                        exceptionFlag = true;
+                                        break;
+                                    }
                                     if (Amoozesh.faculties.contains(Faculty.getFaculty(tempFacultyID)))
                                     {
                                         System.out.println("a faculty with this ID already exists! you cant create duplicate faculties!");
@@ -174,6 +184,10 @@ public class Main
                                         break;
                                     }
                                 }
+                                if (exceptionFlag)
+                                {
+                                    break;
+                                }
                                 Amoozesh.getAmoozesh().makeFaculty(tempFacultyName, tempFacultyID);
                                 System.out.println("done !");
                                 System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
@@ -186,11 +200,20 @@ public class Main
                             case "2":
                                 System.out.println("enter semester name :");
                                 String tempSemesterName = amoozeshLoginFunctionScanner.next();
-                                int tempSemesterID;
+                                int tempSemesterID = 0;
                                 while (true)
                                 {
                                     System.out.println("enter semester ID");
-                                    tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
+                                    try {
+                                        tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshLoginFunctionScanner.next();
+                                        System.out.println("invalid input type , returning to your account...");
+                                        exceptionFlag = true;
+                                        break;
+                                    }
                                     if (Amoozesh.semesters.contains(Semester.getSemester(tempSemesterID)))
                                     {
                                         System.out.println("a semester with this ID already exists! you cant create duplicate semesters!");
@@ -206,6 +229,10 @@ public class Main
                                         break;
                                     }
                                 }
+                                if (exceptionFlag)
+                                {
+                                    break;
+                                }
                                 Amoozesh.getAmoozesh().makeSemester(tempSemesterName, tempSemesterID);
                                 System.out.println("done !");
                                 System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
@@ -219,7 +246,16 @@ public class Main
                                 if (!Amoozesh.semesters.isEmpty())
                                 {
                                     System.out.println("enter semester ID :");
-                                    tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
+                                    try {
+                                        tempSemesterID = amoozeshLoginFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshLoginFunctionScanner.next();
+                                        System.out.println("invalid input type , returning to your account...");
+                                        exceptionFlag = true;
+                                        break;
+                                    }
                                     if (Semester.getSemester(tempSemesterID) != null) {
                                         System.out.println("enter professor name :");
                                         String tempProfessorName = amoozeshLoginFunctionScanner.next();
@@ -228,12 +264,31 @@ public class Main
                                         System.out.println("enter the course name :");
                                         String tempCourseName = amoozeshLoginFunctionScanner.next();
                                         System.out.println("enter the course faculty ID :");
-                                        int tempCourseFacultyID = amoozeshLoginFunctionScanner.nextInt();
-                                        int tempCourseID;
+                                        int tempCourseFacultyID;
+                                        try {
+                                            tempCourseFacultyID = amoozeshLoginFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshLoginFunctionScanner.next();
+                                            System.out.println("invalid input type , returning to your account...");
+                                            exceptionFlag = true;
+                                            break;
+                                        }
+                                        int tempCourseID = 0;
                                         while (true)
                                         {
                                             System.out.println("enter the course ID :");
-                                            tempCourseID = amoozeshLoginFunctionScanner.nextInt();
+                                            try {
+                                                tempCourseID = amoozeshLoginFunctionScanner.nextInt();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                amoozeshLoginFunctionScanner.next();
+                                                System.out.println("invalid input type , returning to your account...");
+                                                exceptionFlag = true;
+                                                break;
+                                            }
                                             if (Objects.requireNonNull(Semester.getSemester(tempSemesterID)).getCourses().contains(Course.getCourse(tempSemesterID,tempCourseID)))
                                             {
                                                 System.out.println("this course already exists!");
@@ -249,8 +304,22 @@ public class Main
                                                 break;
                                             }
                                         }
+                                        if (exceptionFlag)
+                                        {
+                                            break;
+                                        }
                                         System.out.println("enter the course units :");
-                                        int tempCourseUnits = amoozeshLoginFunctionScanner.nextInt();
+                                        int tempCourseUnits = 0;
+                                        try{
+                                            tempCourseUnits = amoozeshLoginFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshLoginFunctionScanner.next();
+                                            System.out.println("invalid input type , returning to your account...");
+                                            exceptionFlag = true;
+                                            break;
+                                        }
                                         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(tempSemesterID, new Course(tempCourseName, tempProfessorName, Faculty.getFaculty(tempCourseFacultyID), tempCourseID, tempCourseUnits), tempProfessorName, tempProfessorLastName);
                                         System.out.println("done !");
                                         System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
@@ -293,9 +362,9 @@ public class Main
             }
             else
             {
-                System.out.println("invalid input enter 1 to go back to main menu or enter any other integer to try again : ");
-                int choice = amoozeshLoginFunctionScanner.nextInt();
-                if (choice == 1)
+                System.out.println("invalid input enter 1 to go back to main menu or enter any other thing to try again : ");
+                String choice = amoozeshLoginFunctionScanner.next();
+                if (choice.equals("1"))
                 {
                     return ;
                 }
@@ -313,454 +382,780 @@ public class Main
         System.out.println("what do you want to edit ?");
         System.out.println("1-amoozesh name \n2-amoozesh password \n3-faculty \n4-student");
         System.out.println("5-semester \n6-professor ");
-        int tempInt = amoozeshEditFunctionScanner.nextInt();
-        String tempString;
-        switch (tempInt)
+        int tempInt = 0;
+        try {
+            tempInt = amoozeshEditFunctionScanner.nextInt();
+        }
+        catch (Exception e)
         {
-            case 1:
-                System.out.println("enter your new name : ");
-                tempString = amoozeshEditFunctionScanner.next();
-                Amoozesh.getAmoozesh().setName(tempString);
-            break;
-            case 2:
-                System.out.println("enter your new password :");
-                tempString = amoozeshEditFunctionScanner.next();
-                Amoozesh.getAmoozesh().setPassword(tempString);
-            break;
-            case 3:
-                System.out.println("what do you want to edit ?");
-                System.out.println("1-faculty name \n2-faculty ID");
-                tempInt = amoozeshEditFunctionScanner.nextInt();
-                if (tempInt == 1)
-                {
-                    System.out.println("enter the  old faculty name :");
+            amoozeshEditFunctionScanner.next();
+            System.out.println("invalid input type !");
+            return;
+        }
+        String tempString;
+        while (true) {
+            switch (tempInt) {
+                case 1:
+                    System.out.println("enter your new name : ");
                     tempString = amoozeshEditFunctionScanner.next();
-                    for (Faculty fc : Amoozesh.getFaculties())
-                    {
-                        if (fc.getName().equals(tempString))
-                        {
-                            System.out.println("enter the new faculty name : ");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            fc.setName(tempString);
-                            return;
-                        }
-                    }
-                    System.out.println("no faculty with this name exists !");
+                    Amoozesh.getAmoozesh().setName(tempString);
                     break;
-                }
-                else
-                {
-                    System.out.println("enter the old faculty ID");
-                    tempInt = amoozeshEditFunctionScanner.nextInt();
-                    int tempInt_2;
-                    if (Faculty.getFaculty(tempInt) != null)
+                case 2:
+                    System.out.println("enter your new password :");
+                    tempString = amoozeshEditFunctionScanner.next();
+                    Amoozesh.getAmoozesh().setPassword(tempString);
+                    break;
+                case 3:
+                    System.out.println("what do you want to edit ?");
+                    System.out.println("1-faculty name \n2-faculty ID");
+                    try {
+                        tempInt = amoozeshEditFunctionScanner.nextInt();
+                    }
+                    catch (Exception e)
                     {
-                        System.out.println("enter the new faculty ID");
-                        while (true)
-                        {
-                            tempInt_2 = amoozeshEditFunctionScanner.nextInt();
-                            if (Amoozesh.faculties.contains(Faculty.getFaculty(tempInt_2))) {
-                                System.out.println("a faculty with this ID already exists!");
-                                System.out.println("try another ID :");
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                        Objects.requireNonNull(Faculty.getFaculty(tempInt)).setFacultyID(tempInt_2);
+                        amoozeshEditFunctionScanner.next();
+                        System.out.println("invalid input type !");
                         return;
                     }
-                    else
-                    {
-                        System.out.println("no faculty with this ID exists !");
-                    }
-                }
-            break;
-            case 4:
-                System.out.println("what do you want to edit?");
-                System.out.println("1-student name \n2-student last name \n3-student ID \n4-student major \n5-student faculty ");
-                System.out.println("6-year of entry \n7-gpa \n8-student courses \n9-student password");
-                tempInt = amoozeshEditFunctionScanner.nextInt();
-                switch (tempInt)
-                {
-                    case 1:
-                        System.out.println("enter the student ID");
-                        tempInt = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempInt) != null)
-                        {
-                            System.out.println("enter the new student name :");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Student.getStudent(tempInt)).setName(tempString);
-                        }
-                    break;
-                    case 2:
-                        System.out.println("enter the student ID");
-                        tempInt = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempInt) != null)
-                        {
-                            System.out.println("enter the new student last name : ");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Student.getStudent(tempInt)).setLastName(tempString);
-                        }
-                    break;
-                    case 3:
-                        System.out.println("enter the student old ID");
-                        tempInt = amoozeshEditFunctionScanner.nextInt();
-                        int tempInt_2;
-                        if (Student.getStudent(tempInt) != null)
-                        {
-                            System.out.println("enter the new student ID");
-                            while (true)
-                            {
-                                tempInt_2 = amoozeshEditFunctionScanner.nextInt();
-                                if (Amoozesh.students.contains(Student.getStudent(tempInt_2)))
-                                {
-                                    System.out.println("a student with this ID already exists!");
-                                    System.out.println("try another ID :");
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                                Objects.requireNonNull(Student.getStudent(tempInt)).setStudentID(tempInt_2);
-                        }
-                    break;
-                    case 4:
-                        System.out.println("enter the student ID");
-                        tempInt = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempInt) != null)
-                        {
-                            System.out.println("enter the new student major :");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Student.getStudent(tempInt)).setMajor(tempString);
-                        }
-                    break;
-                    case 5:
-                        System.out.println("enter the student ID");
-                        int tempStudentID = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempStudentID) != null)
-                        {
-                            System.out.println("enter the new student faculty ID:");
-                            int newFacultyID = amoozeshEditFunctionScanner.nextInt();
-                            if (Faculty.getFaculty(newFacultyID) != null)
-                            {
-                                (Objects.requireNonNull(Student.getStudent(tempStudentID))).setFaculty(Faculty.getFaculty(newFacultyID));
+                    if (tempInt == 1) {
+                        System.out.println("enter the  old faculty name :");
+                        tempString = amoozeshEditFunctionScanner.next();
+                        for (Faculty fc : Amoozesh.getFaculties()) {
+                            if (fc.getName().equals(tempString)) {
+                                System.out.println("enter the new faculty name : ");
+                                tempString = amoozeshEditFunctionScanner.next();
+                                fc.setName(tempString);
+                                return;
                             }
                         }
-                    break;
-                    case 6:
-                        System.out.println("enter the student ID");
-                        tempStudentID = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempStudentID) != null)
-                        {
-                            System.out.println("enter the new student year of entry :");
+                        System.out.println("no faculty with this name exists !");
+                        break;
+                    } else {
+                        System.out.println("enter the old faculty ID");
+                        try{
                             tempInt = amoozeshEditFunctionScanner.nextInt();
-                            Objects.requireNonNull(Student.getStudent(tempStudentID)).setYearOfEntry(tempInt);
                         }
-                    break;
-                    case 7:
-                        System.out.println("enter the student ID");
-                        tempStudentID = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempStudentID) != null)
+                        catch (Exception e)
                         {
-                            System.out.println("enter the new student gpa , gpa should be between 0.0 to 20.0 :");
-                            double tempDouble;
-                            while (true)
-                            {
-                                tempDouble = amoozeshEditFunctionScanner.nextInt();
-                                if (tempDouble >= 0.0 && tempDouble <= 20.0)
-                                {
-                                    break;
+                            amoozeshEditFunctionScanner.next();
+                            System.out.println("invalid input type !");
+                            return;
+                        }
+                        int tempInt_2;
+                        if (Faculty.getFaculty(tempInt) != null) {
+                            System.out.println("enter the new faculty ID");
+                            while (true) {
+                                try {
+                                    tempInt_2 = amoozeshEditFunctionScanner.nextInt();
                                 }
-                                else
+                                catch (Exception e)
                                 {
-                                    System.out.println("invalid input , gpa should be between 0.0 to 20.0 , try again :");
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Amoozesh.faculties.contains(Faculty.getFaculty(tempInt_2))) {
+                                    System.out.println("a faculty with this ID already exists!");
+                                    System.out.println("try another ID :");
+                                } else {
+                                    break;
                                 }
                             }
-                            Objects.requireNonNull(Student.getStudent(tempStudentID)).setGPA(tempDouble);
+                            Objects.requireNonNull(Faculty.getFaculty(tempInt)).setFacultyID(tempInt_2);
+                            return;
+                        } else {
+                            System.out.println("no faculty with this ID exists !");
                         }
+                    }
                     break;
-                    case 8:
-                        System.out.println("enter the student ID :");
-                        tempStudentID = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempStudentID) != null)
-                        {
-                            System.out.println("what do you want to do?");
-                            System.out.println("1-add course \n2-remove course \n3-set course score");
-                            int choice = amoozeshEditFunctionScanner.nextInt();
-                            switch (choice)
-                            {
-                                case 1:
-                                    System.out.println("enter the course semesters ID :");
-                                    int tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                                    System.out.println("enter the course ID :");
-                                    int tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
-                                    {
-                                        Objects.requireNonNull(Student.getStudent(tempStudentID)).addCourse(Course.getCourse(tempSemesterID,tempCourseID));
+                case 4:
+                    System.out.println("what do you want to edit?");
+                    System.out.println("1-student name \n2-student last name \n3-student ID \n4-student major \n5-student faculty ");
+                    System.out.println("6-year of entry \n7-gpa \n8-student courses \n9-student password");
+                    tempInt = amoozeshEditFunctionScanner.nextInt();
+                    while (true) {
+                        switch (tempInt) {
+                            case 1:
+                                System.out.println("enter the student ID");
+                                try {
+                                    tempInt = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempInt) != null) {
+                                    System.out.println("enter the new student name :");
+                                    try {
+                                        tempString = amoozeshEditFunctionScanner.next();
                                     }
-                                    break;
-                                case 2:
-                                    System.out.println("enter the course semester ID :");
-                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                                    System.out.println("enter the course ID :");
-                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
+                                    catch (Exception e)
                                     {
-                                        Objects.requireNonNull(Student.getStudent(tempStudentID)).removeCourse(Course.getCourse(tempSemesterID,tempCourseID));
+                                        amoozeshEditFunctionScanner.next();
+                                        System.out.println("invalid input type !");
+                                        return;
                                     }
-                                    break;
-                                case 3:
-                                    System.out.println("enter the course semester ID :");
-                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                                    System.out.println("enter the course ID :");
-                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    double tempScore;
-                                    if (Objects.requireNonNull(Student.getStudent(tempStudentID)).getStudentCourse(tempSemesterID,tempCourseID) != null)
-                                    {
-                                        System.out.println("enter the course score , score should be between 0.0 and 20.0 :");
-                                        while (true)
+                                    Objects.requireNonNull(Student.getStudent(tempInt)).setName(tempString);
+                                }
+                                break;
+                            case 2:
+                                System.out.println("enter the student ID");
+                                try {
+                                    tempInt = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempInt) != null) {
+                                    System.out.println("enter the new student last name : ");
+                                    tempString = amoozeshEditFunctionScanner.next();
+                                    Objects.requireNonNull(Student.getStudent(tempInt)).setLastName(tempString);
+                                }
+                                break;
+                            case 3:
+                                System.out.println("enter the student old ID");
+                                try {
+                                    tempInt = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                int tempInt_2;
+                                if (Student.getStudent(tempInt) != null) {
+                                    System.out.println("enter the new student ID");
+                                    while (true) {
+                                        try {
+                                            tempInt_2 = amoozeshEditFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
                                         {
-                                            tempScore = amoozeshEditFunctionScanner.nextDouble();
-                                            if (tempScore >= 0.0 && tempScore <= 20.0)
-                                            {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (Amoozesh.students.contains(Student.getStudent(tempInt_2))) {
+                                            System.out.println("a student with this ID already exists!");
+                                            System.out.println("try another ID :");
+                                        } else {
+                                            break;
+                                        }
+                                    }
+                                    Objects.requireNonNull(Student.getStudent(tempInt)).setStudentID(tempInt_2);
+                                }
+                                break;
+                            case 4:
+                                System.out.println("enter the student ID");
+                                try {
+                                    tempInt = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempInt) != null) {
+                                    System.out.println("enter the new student major :");
+                                    tempString = amoozeshEditFunctionScanner.next();
+                                    Objects.requireNonNull(Student.getStudent(tempInt)).setMajor(tempString);
+                                }
+                                break;
+                            case 5:
+                                System.out.println("enter the student ID");
+                                int tempStudentID = 0;
+                                try {
+                                    tempStudentID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempStudentID) != null) {
+                                    System.out.println("enter the new student faculty ID:");
+                                    int newFacultyID = 0;
+                                    try {
+                                        newFacultyID = amoozeshEditFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshEditFunctionScanner.next();
+                                        System.out.println("invalid input type !");
+                                        return;
+                                    }
+                                    if (Faculty.getFaculty(newFacultyID) != null) {
+                                        (Objects.requireNonNull(Student.getStudent(tempStudentID))).setFaculty(Faculty.getFaculty(newFacultyID));
+                                    }
+                                }
+                                break;
+                            case 6:
+                                System.out.println("enter the student ID");
+                                try {
+                                    tempStudentID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempStudentID) != null) {
+                                    System.out.println("enter the new student year of entry :");
+                                    try {
+                                        tempInt = amoozeshEditFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshEditFunctionScanner.next();
+                                        System.out.println("invalid input type !");
+                                        return;
+                                    }
+                                    Objects.requireNonNull(Student.getStudent(tempStudentID)).setYearOfEntry(tempInt);
+                                }
+                                break;
+                            case 7:
+                                System.out.println("enter the student ID");
+                                try {
+                                    tempStudentID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempStudentID) != null) {
+                                    System.out.println("enter the new student gpa , gpa should be between 0.0 to 20.0 :");
+                                    double tempDouble;
+                                    while (true) {
+                                        try {
+                                            tempDouble = amoozeshEditFunctionScanner.nextDouble();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (tempDouble >= 0.0 && tempDouble <= 20.0) {
+                                            break;
+                                        } else {
+                                            System.out.println("invalid input , gpa should be between 0.0 to 20.0 , try again :");
+                                        }
+                                    }
+                                    Objects.requireNonNull(Student.getStudent(tempStudentID)).setGPA(tempDouble);
+                                }
+                                break;
+                            case 8:
+                                System.out.println("enter the student ID :");
+                                try {
+                                    tempStudentID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempStudentID) != null) {
+                                    System.out.println("what do you want to do?");
+                                    System.out.println("1-add course \n2-remove course \n3-set course score");
+                                    int choice = 0;
+                                    try {
+                                        choice = amoozeshEditFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshEditFunctionScanner.next();
+                                        System.out.println("invalid input type !");
+                                        return;
+                                    }
+                                    while (true) {
+                                        switch (choice)
+                                        {
+                                            case 1:
+                                                System.out.println("enter the course semesters ID :");
+                                                int tempSemesterID = 0;
+                                                try {
+                                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                System.out.println("enter the course ID :");
+                                                int tempCourseID;
+                                                try {
+                                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                                    Objects.requireNonNull(Student.getStudent(tempStudentID)).addCourse(Course.getCourse(tempSemesterID, tempCourseID));
+                                                }
                                                 break;
-                                            }
-                                            else
-                                            {
-                                                System.out.println("invalid score , enter a score between 0.0 and 20.0 :");
-                                            }
-                                        }
-                                        for (Course crs : Objects.requireNonNull(Student.getStudent(tempStudentID)).getCourses())
-                                        {
-                                            if (Course.isEqual(crs , Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID))))
-                                            {
-                                                crs.setScore(tempScore);
-                                            }
-                                        }
+                                            case 2:
+                                                System.out.println("enter the course semester ID :");
+                                                try {
+                                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                System.out.println("enter the course ID :");
+                                                try {
+                                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                                    Objects.requireNonNull(Student.getStudent(tempStudentID)).removeCourse(Course.getCourse(tempSemesterID, tempCourseID));
+                                                }
+                                                break;
+                                            case 3:
+                                                System.out.println("enter the course semester ID :");
+                                                try {
+                                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                System.out.println("enter the course ID :");
+                                                try {
+                                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                double tempScore;
+                                                if (Objects.requireNonNull(Student.getStudent(tempStudentID)).getStudentCourse(tempSemesterID, tempCourseID) != null) {
+                                                    System.out.println("enter the course score , score should be between 0.0 and 20.0 :");
+                                                    while (true) {
+                                                        try {
+                                                            tempScore = amoozeshEditFunctionScanner.nextDouble();
+                                                        }
+                                                        catch (Exception e)
+                                                        {
+                                                            amoozeshEditFunctionScanner.next();
+                                                            System.out.println("invalid input type !");
+                                                            return;
+                                                        }
+                                                        if (tempScore >= 0.0 && tempScore <= 20.0) {
+                                                            break;
+                                                        } else {
+                                                            System.out.println("invalid score , enter a score between 0.0 and 20.0 :");
+                                                        }
+                                                    }
+                                                    for (Course crs : Objects.requireNonNull(Student.getStudent(tempStudentID)).getCourses()) {
+                                                        if (Course.isEqual(crs, Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)))) {
+                                                            crs.setScore(tempScore);
+                                                        }
+                                                    }
 
+                                                }
+                                            break;
+                                            default:
+                                                System.out.println("invalid input try again :");
+                                            break;
+                                        }
+                                        break;
                                     }
-                                    break;
-
+                                }
+                                break;
+                            case 9:
+                                System.out.println("enter the student ID");
+                                try {
+                                    tempStudentID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                if (Student.getStudent(tempStudentID) != null) {
+                                    System.out.println("enter the new student password :");
+                                    tempString = amoozeshEditFunctionScanner.next();
+                                    Objects.requireNonNull(Student.getStudent(tempStudentID)).setPassword(tempString);
+                                }
+                                break;
+                            default:
+                                System.out.println("invalid input !");
+                                break;
+                        }
+                        break;
+                    }
+                    break;
+                case 5: // editing semester
+                    System.out.println("what do you want to edit ?");
+                    System.out.println("1-semester name \n2-semester ID \n3-semester courses");
+                    try {
+                        tempInt = amoozeshEditFunctionScanner.nextInt();
+                    }
+                    catch (Exception e)
+                    {
+                        amoozeshEditFunctionScanner.next();
+                        System.out.println("invalid input type !");
+                        return;
+                    }
+                    switch (tempInt) {
+                        case 1:
+                            System.out.println("enter the semester ID");
+                            int tempSemesterID;
+                            try {
+                                tempSemesterID = amoozeshEditFunctionScanner.nextInt();
                             }
-                        }
+                            catch (Exception e)
+                            {
+                                amoozeshEditFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
+                            if (Semester.getSemester(tempSemesterID) != null) {
+                                System.out.println("enter the new semester name :");
+                                tempString = amoozeshEditFunctionScanner.next();
+                                Objects.requireNonNull(Semester.getSemester(tempSemesterID)).setName(tempString);
+                            }
+                            break;
+                        case 2:
+                            System.out.println("enter the old semester ID");
+                            try {
+                                tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                            }
+                            catch (Exception e)
+                            {
+                                amoozeshEditFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
+                            if (Semester.getSemester(tempSemesterID) != null) {
+                                System.out.println("enter the new semester ID :");
+                                while (true) {
+                                    try {
+                                        tempInt = amoozeshEditFunctionScanner.nextInt();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        amoozeshEditFunctionScanner.next();
+                                        System.out.println("invalid input type !");
+                                        return;
+                                    }
+                                    if (Amoozesh.semesters.contains(Semester.getSemester(tempInt))) {
+                                        System.out.println("a semester with this ID already exists!");
+                                        System.out.println("try another ID:");
+                                    } else {
+                                        break;
+                                    }
+                                }
+                                Objects.requireNonNull(Semester.getSemester(tempSemesterID)).setSemesterID(tempInt);
+                                System.out.println("semester ID successfully changed!");
+                            }
+                            break;
+                        case 3:
+                            System.out.println("enter the semester ID");
+                            try {
+                                tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                            }
+                            catch (Exception e)
+                            {
+                                amoozeshEditFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
+                            if (Semester.getSemester(tempSemesterID) != null) {
+                                System.out.println("what do you want to edit ?");
+                                System.out.println("1-course name \n2-course professor name \n3-course faculty \n4-course ID \n5-units");
+                                int choice;
+                                try {
+                                    choice = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                switch (choice) {
+                                    case 1:
+                                        System.out.println("enter the course ID");
+                                        int tempCourseID;
+                                        try {
+                                            tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                            System.out.println("enter the new course name :");
+                                            tempString = amoozeshEditFunctionScanner.next();
+                                            Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setName(tempString);
+                                        }
+                                        break;
+                                    case 2:
+                                        System.out.println("enter the course ID");
+                                        try {
+                                            tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                            System.out.println("enter the new course professor name :");
+                                            tempString = amoozeshEditFunctionScanner.next();
+                                            Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setProfessorName(tempString);
+                                        }
+                                        break;
+                                    case 3:
+                                        System.out.println("enter the course ID :");
+                                        try {
+                                            tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                            System.out.println("enter the new course faculty ID :");
+                                            try {
+                                                tempInt = amoozeshEditFunctionScanner.nextInt();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                amoozeshEditFunctionScanner.next();
+                                                System.out.println("invalid input type !");
+                                                return;
+                                            }
+                                            Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setFaculty(Faculty.getFaculty(tempInt));
+                                        }
+                                        break;
+                                    case 4:
+                                        System.out.println("enter the old course ID :");
+                                        try {
+                                            tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                            System.out.println("enter the new course ID :");
+                                            while (true) {
+                                                try {
+                                                    tempInt = amoozeshEditFunctionScanner.nextInt();
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    amoozeshEditFunctionScanner.next();
+                                                    System.out.println("invalid input type !");
+                                                    return;
+                                                }
+                                                if (Objects.requireNonNull(Semester.getSemester(tempSemesterID)).getCourses().contains(Course.getCourse(tempSemesterID, tempInt))) {
+                                                    System.out.println("a course with this ID already exists in this semester!");
+                                                    System.out.println("try another ID:");
+                                                } else {
+                                                    break;
+                                                }
+                                            }
+                                            Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setCourseID(tempInt);
+                                        }
+                                        break;
+                                    case 5:
+                                        System.out.println("enter the course ID :");
+                                        try {
+                                            tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            amoozeshEditFunctionScanner.next();
+                                            System.out.println("invalid input type !");
+                                            return;
+                                        }
+                                        if (Course.getCourse(tempSemesterID, tempCourseID) != null) {
+                                            System.out.println("enter the new course units :");
+                                           try {
+                                               tempInt = amoozeshEditFunctionScanner.nextInt();
+                                           }
+                                           catch (Exception e)
+                                           {
+                                               amoozeshEditFunctionScanner.next();
+                                               System.out.println("invalid input type !");
+                                               return;
+                                           }
+                                            Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setUnits(tempInt);
+                                        }
+                                        break;
+                                    default:
+                                        System.out.println("invalid input !");
+                                        return;
+                                }
+                            }
+                        break;
+                        default:
+                            System.out.println("invalid input !");
+                            return;
+
+                    }
                     break;
-                    case 9:
-                        System.out.println("enter the student ID");
-                        tempStudentID = amoozeshEditFunctionScanner.nextInt();
-                        if (Student.getStudent(tempStudentID) != null)
-                        {
-                            System.out.println("enter the new student password :");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Student.getStudent(tempStudentID)).setPassword(tempString);
-                        }
-                    break;
-                }
+                case 6: // editing the professor
+                    System.out.println("what do you want to edit ? ");
+                    System.out.println("1-professor name \n2-professor last name \n3-professor faculty \n4-professor group");
+                    System.out.println("5-remove professor courses \n6-professor password");
+                    int choice;
+                    try {
+                        choice = amoozeshEditFunctionScanner.nextInt();
+                    }
+                    catch (Exception e)
+                    {
+                        amoozeshEditFunctionScanner.next();
+                        System.out.println("invalid input type !");
+                        return;
+                    }
+                    switch (choice) {
+                        case 1:
+                            System.out.println("enter professors old first name : ");
+                            String tempFirstName = amoozeshEditFunctionScanner.next();
+                            System.out.println("enter professors last name :  ");
+                            String tempLastName = amoozeshEditFunctionScanner.next();
+                            if (Professor.getProfessor(tempFirstName, tempLastName) != null) {
+                                System.out.println("enter the professors new name :");
+                                String tempNewFirstName = amoozeshEditFunctionScanner.next();
+                                Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setName(tempNewFirstName);
+                            }
+                            break;
+                        case 2:
+                            System.out.println("enter professors first name : ");
+                            tempFirstName = amoozeshEditFunctionScanner.next();
+                            System.out.println("enter professors old last name :  ");
+                            tempLastName = amoozeshEditFunctionScanner.next();
+                            if (Professor.getProfessor(tempFirstName, tempLastName) != null) {
+                                System.out.println("enter the professors new last name :");
+                                String tempNewLastName = amoozeshEditFunctionScanner.next();
+                                Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setLastName(tempNewLastName);
+                            }
+                            break;
+                        case 3:
+                            System.out.println("enter professors first name : ");
+                            tempFirstName = amoozeshEditFunctionScanner.next();
+                            System.out.println("enter professors last name :  ");
+                            tempLastName = amoozeshEditFunctionScanner.next();
+                            if (Professor.getProfessor(tempFirstName, tempLastName) != null) {
+                                System.out.println("enter the new faculty ID :");
+                                int tempFacultyID;
+                                try {
+                                    tempFacultyID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setFaculty(Faculty.getFaculty(tempFacultyID));
+                            }
+                            break;
+                        case 4:
+                            System.out.println("enter professors first name : ");
+                            tempFirstName = amoozeshEditFunctionScanner.next();
+                            System.out.println("enter professors last name :  ");
+                            tempLastName = amoozeshEditFunctionScanner.next();
+                            if (Professor.getProfessor(tempFirstName, tempLastName) != null) {
+                                System.out.println("enter the new group name :");
+                                String tempGroupName = amoozeshEditFunctionScanner.next();
+                                Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setGroup(tempGroupName);
+                            }
+                            break;
+                        case 5:
+                            System.out.println("note : you can only remove courses from here , to add courses , go to : main menu > login > amoozesh > enter your user and password and select new course.");
+                            System.out.println("enter professors first name : ");
+                            tempFirstName = amoozeshEditFunctionScanner.next();
+                            System.out.println("enter professors last name :  ");
+                            tempLastName = amoozeshEditFunctionScanner.next();
+                            if (Professor.getProfessor(tempFirstName, tempLastName) != null) {
+                                System.out.println("enter the course semesters ID :");
+                                int tempSemesterID;
+                                try {
+                                    tempSemesterID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                System.out.println("enter the course ID :");
+                                int tempCourseID;
+                                try {
+                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    amoozeshEditFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
+                                Amoozesh.getAmoozesh().removeCourseFromSemesterAndProfessor(tempSemesterID, Course.getCourse(tempSemesterID, tempCourseID), tempFirstName, tempLastName);
+                                System.out.println("the current professor courses are : ");
+                                Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).printCourses(Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)));
+                            }
+                            break;
+                        case 6:
+                            System.out.println("enter professors first name : ");
+                            tempFirstName = amoozeshEditFunctionScanner.next();
+                            System.out.println("enter professors last name :  ");
+                            tempLastName = amoozeshEditFunctionScanner.next();
+                            if (Professor.getProfessor(tempFirstName, tempLastName) != null) {
+                                System.out.println("enter the new password :");
+                                tempString = amoozeshEditFunctionScanner.next();
+                                Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setPassword(tempString);
+                            }
+                            break;
+                        default:
+                            System.out.println("invalid input !");
+                            return;
+                    }
                 break;
-            case 5: // editing semester
-                System.out.println("what do you want to edit ?");
-                System.out.println("1-semester name \n2-semester ID \n3-semester courses");
-                tempInt = amoozeshEditFunctionScanner.nextInt();
-                switch (tempInt)
-                {
-                    case 1:
-                        System.out.println("enter the semester ID");
-                        int tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                        if (Semester.getSemester(tempSemesterID) != null)
-                        {
-                            System.out.println("enter the new semester name :");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Semester.getSemester(tempSemesterID)).setName(tempString);
-                        }
-                    break;
-                    case 2:
-                        System.out.println("enter the old semester ID");
-                        tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                        if (Semester.getSemester(tempSemesterID) != null)
-                        {
-                            System.out.println("enter the new semester ID :");
-                            while (true)
-                            {
-                                tempInt = amoozeshEditFunctionScanner.nextInt();
-                                if (Amoozesh.semesters.contains(Semester.getSemester(tempInt)))
-                                {
-                                    System.out.println("a semester with this ID already exists!");
-                                    System.out.println("try another ID:");
-                                }
-                                else
-                                {
-                                    break;
-                                }
-                            }
-                            Objects.requireNonNull(Semester.getSemester(tempSemesterID)).setSemesterID(tempInt);
-                            System.out.println("semester ID successfully changed!");
-                        }
-                    break;
-                    case 3:
-                        System.out.println("enter the semester ID");
-                        tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                        if (Semester.getSemester(tempSemesterID) != null)
-                        {
-                            System.out.println("what do you want to edit ?");
-                            System.out.println("1-course name \n2-course professor name \n3-course faculty \n4-course ID \n5-units");
-                            int choice = amoozeshEditFunctionScanner.nextInt();
-                            switch (choice)
-                            {
-                                case 1:
-                                    System.out.println("enter the course ID");
-                                    int tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID , tempCourseID) != null)
-                                    {
-                                        System.out.println("enter the new course name :");
-                                        tempString = amoozeshEditFunctionScanner.next();
-                                        Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setName(tempString);
-                                    }
-                                break;
-                                case 2:
-                                    System.out.println("enter the course ID");
-                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID , tempCourseID) != null)
-                                    {
-                                        System.out.println("enter the new course professor name :");
-                                        tempString = amoozeshEditFunctionScanner.next();
-                                        Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setProfessorName(tempString);
-                                    }
-                                break;
-                                case 3:
-                                    System.out.println("enter the course ID :");
-                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
-                                    {
-                                        System.out.println("enter the new course faculty ID :");
-                                        tempInt = amoozeshEditFunctionScanner.nextInt();
-                                        Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setFaculty(Faculty.getFaculty(tempInt));
-                                    }
-                                break;
-                                case 4:
-                                    System.out.println("enter the old course ID :");
-                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
-                                    {
-                                        System.out.println("enter the new course ID :");
-                                        while (true)
-                                        {
-                                            tempInt = amoozeshEditFunctionScanner.nextInt();
-                                            if (Objects.requireNonNull(Semester.getSemester(tempSemesterID)).getCourses().contains(Course.getCourse(tempSemesterID,tempInt)))
-                                            {
-                                                System.out.println("a course with this ID already exists in this semester!");
-                                                System.out.println("try another ID:");
-                                            }
-                                            else
-                                            {
-                                                break;
-                                            }
-                                        }
-                                        Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setCourseID(tempInt);
-                                    }
-                                break;
-                                case 5:
-                                    System.out.println("enter the course ID :");
-                                    tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                                    if (Course.getCourse(tempSemesterID,tempCourseID) != null)
-                                    {
-                                        System.out.println("enter the new course units :");
-                                        tempInt = amoozeshEditFunctionScanner.nextInt();
-                                        Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).setUnits(tempInt);
-                                    }
-                                break;
-                            }
-                        }
-                    break;
-
-                }
-            break;
-            case 6: // editing the professor
-                System.out.println("what do you want to edit ? ");
-                System.out.println("1-professor name \n2-professor last name \n3-professor faculty \n4-professor group");
-                System.out.println("5-remove professor courses \n6-professor password");
-                int choice = amoozeshEditFunctionScanner.nextInt();
-                switch (choice)
-                {
-                    case 1:
-                        System.out.println("enter professors old first name : ");
-                        String tempFirstName = amoozeshEditFunctionScanner.next();
-                        System.out.println("enter professors last name :  ");
-                        String tempLastName = amoozeshEditFunctionScanner.next();
-                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
-                        {
-                            System.out.println("enter the professors new name :");
-                            String tempNewFirstName = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setName(tempNewFirstName);
-                        }
-                    break;
-                    case 2:
-                        System.out.println("enter professors first name : ");
-                        tempFirstName = amoozeshEditFunctionScanner.next();
-                        System.out.println("enter professors old last name :  ");
-                        tempLastName = amoozeshEditFunctionScanner.next();
-                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
-                        {
-                            System.out.println("enter the professors new last name :");
-                            String tempNewLastName = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setLastName(tempNewLastName);
-                        }
-                    break;
-                    case 3:
-                        System.out.println("enter professors first name : ");
-                        tempFirstName = amoozeshEditFunctionScanner.next();
-                        System.out.println("enter professors last name :  ");
-                        tempLastName = amoozeshEditFunctionScanner.next();
-                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
-                        {
-                            System.out.println("enter the new faculty ID :");
-                            int tempFacultyID = amoozeshEditFunctionScanner.nextInt();
-                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setFaculty(Faculty.getFaculty(tempFacultyID));
-                        }
-                    break;
-                    case 4:
-                        System.out.println("enter professors first name : ");
-                        tempFirstName = amoozeshEditFunctionScanner.next();
-                        System.out.println("enter professors last name :  ");
-                        tempLastName = amoozeshEditFunctionScanner.next();
-                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
-                        {
-                            System.out.println("enter the new group name :");
-                            String tempGroupName = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setGroup(tempGroupName);
-                        }
-                    break;
-                    case 5:
-                        System.out.println("note : you can only remove courses from here , to add courses , go to : main menu > login > amoozesh > enter your user and password and select new course.");
-                        System.out.println("enter professors first name : ");
-                        tempFirstName = amoozeshEditFunctionScanner.next();
-                        System.out.println("enter professors last name :  ");
-                        tempLastName = amoozeshEditFunctionScanner.next();
-                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
-                        {
-                            System.out.println("enter the course semesters ID :");
-                            int tempSemesterID = amoozeshEditFunctionScanner.nextInt();
-                            System.out.println("enter the course ID :");
-                            int tempCourseID = amoozeshEditFunctionScanner.nextInt();
-                            Amoozesh.getAmoozesh().removeCourseFromSemesterAndProfessor(tempSemesterID , Course.getCourse(tempSemesterID,tempCourseID) , tempFirstName , tempLastName);
-                            System.out.println("the current professor courses are : ");
-                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).printCourses(Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)));
-                        }
-                    break;
-                    case 6:
-                        System.out.println("enter professors first name : ");
-                        tempFirstName = amoozeshEditFunctionScanner.next();
-                        System.out.println("enter professors last name :  ");
-                        tempLastName = amoozeshEditFunctionScanner.next();
-                        if (Professor.getProfessor(tempFirstName,tempLastName) != null)
-                        {
-                            System.out.println("enter the new password :");
-                            tempString = amoozeshEditFunctionScanner.next();
-                            Objects.requireNonNull(Professor.getProfessor(tempFirstName, tempLastName)).setPassword(tempString);
-                        }
-                    break;
-                }
+                default:
+                    System.out.println("invalid input try again :");
+                break;
+            }
             break;
         }
 
@@ -830,7 +1225,15 @@ public class Main
                         while (true)
                         {
                             System.out.println("enter the ID of the student which you would like to set the score for :");
-                            tempStudentID = professorLoginFunctionScanner.nextInt();
+                            try {
+                                tempStudentID = professorLoginFunctionScanner.nextInt();
+                            }
+                            catch (Exception e)
+                            {
+                                professorLoginFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
                             if (tempArrayOfStudentID.contains(tempStudentID))
                             {
                                 break;
@@ -844,7 +1247,15 @@ public class Main
                         double tempScore;
                         while (true)
                         {
-                            tempScore = professorLoginFunctionScanner.nextDouble();
+                            try {
+                                tempScore = professorLoginFunctionScanner.nextDouble();
+                            }
+                            catch (Exception e)
+                            {
+                                professorLoginFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
                             if (tempScore >= 0.0 && tempScore <= 20.0)
                             {
                                 break;
@@ -866,9 +1277,9 @@ public class Main
                             }
                         }
                         System.out.println("done !");
-                        System.out.println("enter 1 to stay in your account , enter any other integer to go back to main menu :");
-                        int choice = professorLoginFunctionScanner.nextInt();
-                        if (choice != 1)
+                        System.out.println("enter 1 to stay in your account , enter any other thing to go back to main menu :");
+                        String  choice = professorLoginFunctionScanner.next();
+                        if (!choice.equals("1"))
                         {
                             return;
                         }
@@ -936,7 +1347,16 @@ public class Main
         while (true)
         {
             System.out.println("enter your student ID :");
-            int studentID = studentLoginFunctionScanner.nextInt();
+            int studentID;
+            try {
+                studentID = studentLoginFunctionScanner.nextInt();
+            }
+            catch (Exception e)
+            {
+                studentLoginFunctionScanner.next();
+                System.out.println("invalid input type !");
+                return;
+            }
             if (Student.getStudent(studentID) == null)
             {
                 System.out.println("no such student exists !");
@@ -1015,7 +1435,16 @@ public class Main
         while (true)
         {
             System.out.println("enter the semesterID for which you are trying to register :");
-            int tempSemesterID = studentRegisterFunctionScanner.nextInt();
+            int tempSemesterID;
+            try {
+                tempSemesterID = studentRegisterFunctionScanner.nextInt();
+            }
+            catch (Exception e)
+            {
+                studentRegisterFunctionScanner.next();
+                System.out.println("invalid input type !");
+                return;
+            }
             if (!Amoozesh.semesters.contains(Semester.getSemester(tempSemesterID)))
             {
                 System.out.println("there is no semester with this ID !");
@@ -1039,7 +1468,16 @@ public class Main
                     System.out.println("enter the courseID of the course that you would like to register for this semester , you can select at least 12 and at most 20 credit units.");
                     while (true)
                     {
-                        int tempCourseID = studentRegisterFunctionScanner.nextInt();
+                        int tempCourseID;
+                        try {
+                            tempCourseID = studentRegisterFunctionScanner.nextInt();
+                        }
+                        catch (Exception e)
+                        {
+                            studentRegisterFunctionScanner.next();
+                            System.out.println("invalid input type !");
+                            return;
+                        }
                         if (Objects.requireNonNull(Semester.getSemester(tempSemesterID)).getCourses().contains(Course.getCourse(tempSemesterID, tempCourseID))) // if such course exists in that semester...
                         {
                             if (Objects.requireNonNull(Student.getStudent(studentID)).getUnitsInCurrentSemester() + Objects.requireNonNull(Course.getCourse(tempSemesterID, tempCourseID)).getUnits() <= 20) // if adding that course won't increase credit count beyond 20...
@@ -1178,7 +1616,15 @@ public class Main
                         while (true)
                         {
                             System.out.println("enter the professors faculty ID :");
-                            tempFacultyID = signupFunctionScanner.nextInt();
+                            try {
+                                tempFacultyID = signupFunctionScanner.nextInt();
+                            }
+                            catch (Exception e)
+                            {
+                                signupFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
                             if (!Amoozesh.faculties.contains(Faculty.getFaculty(tempFacultyID)))
                             {
                                 System.out.println("no such faculty exists !");
@@ -1232,7 +1678,15 @@ public class Main
                             while (true)
                             {
                                 System.out.println("enter the students ID :");
-                                tempID = signupFunctionScanner.nextInt();
+                                try {
+                                    tempID = signupFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    signupFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
                                 if (Amoozesh.students.contains(Student.getStudent(tempID)))
                                 {
                                     System.out.println("an student with this ID already exists! you cant create duplicate students");
@@ -1254,7 +1708,15 @@ public class Main
                             while (true)
                             {
                                 System.out.println("enter the students faculty ID :");
-                                tempFacultyID = signupFunctionScanner.nextInt();
+                                try {
+                                    tempFacultyID = signupFunctionScanner.nextInt();
+                                }
+                                catch (Exception e)
+                                {
+                                    signupFunctionScanner.next();
+                                    System.out.println("invalid input type !");
+                                    return;
+                                }
                                 if (!Amoozesh.faculties.contains(Faculty.getFaculty(tempFacultyID)))
                                 {
                                     System.out.println("no such faculty exists! enter 1 to try again or enter any other thing to return to main menu :");
@@ -1270,7 +1732,16 @@ public class Main
                                 }
                             }
                             System.out.println("enter the students year of entry :");
-                            int tempYear = signupFunctionScanner.nextInt();
+                            int tempYear;
+                            try {
+                                tempYear = signupFunctionScanner.nextInt();
+                            }
+                            catch (Exception e)
+                            {
+                                signupFunctionScanner.next();
+                                System.out.println("invalid input type !");
+                                return;
+                            }
                             System.out.println("enter the students password :");
                             String tempPassword = signupFunctionScanner.next();
                             Amoozesh.getAmoozesh().makeStudent(tempName,tempLastName,tempID,tempMajor,Faculty.getFaculty(tempFacultyID),tempYear,0,tempPassword);
@@ -1307,9 +1778,7 @@ public class Main
 
 }
 
-// todo : add default case for switches ( so if we enter an invalid number we get an error )
 
-// todo : input validation
 
 
 
