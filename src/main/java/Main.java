@@ -15,27 +15,6 @@ public class Main
 {
     public static void main(String[] args)
      {
-        //temp statements
-        if (!Amoozesh.isAmoozeshMade)
-        {
-            Amoozesh.makeAmoozesh("admin", "1234");
-        }
-        Amoozesh.getAmoozesh().makeFaculty("math" , 1);
-        Amoozesh.getAmoozesh().makeStudent("mohsen" , "ansari" , 400 , "cs" , Faculty.getFaculty(1) , 1400 , 18 , "1234");
-        Amoozesh.getAmoozesh().makeStudent("mehdi" , "ahmadi" , 401 , "cs" , Faculty.getFaculty(1) , 1400 , 18 , "1234");
-        Amoozesh.getAmoozesh().makeFaculty("ce" , 2);
-        Amoozesh.getAmoozesh().makeSemester("1400"  , 14001);
-        Amoozesh.getAmoozesh().makeProfessor("iman" , "kherad" , Faculty.getFaculty(1) , "cs" , "1234");
-        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("cns" , "kheradpishe" , Faculty.getFaculty(1) , 1 , 3),"iman" , "kherad");
-        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("bp","kheradpishe" , Faculty.getFaculty(1) , 2 , 3),"iman" , "kherad");
-         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("A","kheradpishe" , Faculty.getFaculty(1) , 3 , 3),"iman" , "kherad");
-         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("B","kheradpishe" , Faculty.getFaculty(1) , 4 , 3),"iman" , "kherad");
-         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("C","kheradpishe" , Faculty.getFaculty(1) , 5 , 3),"iman" , "kherad");
-         Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001,new Course("D","kheradpishe" , Faculty.getFaculty(1) , 6 , 3),"iman" , "kherad");
-        Amoozesh.getAmoozesh().addCourseToSemesterAndProfessor(14001, new Course("E" , "kheradpishe" , Faculty.getFaculty(1), 7 , 3) ,"iman" , "kherad" );
-        Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001,1));
-        Objects.requireNonNull(Student.getStudent(400)).addCourse(Course.getCourse(14001, 2));
-        //end of temp statements
         while (true) // main program loop , breaks when the program ends
         {
             System.out.println("welcome to the educational system");
